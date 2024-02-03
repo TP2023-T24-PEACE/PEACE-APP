@@ -11,3 +11,7 @@ val Pink40 = Color(0xFF7D5260)
 
 /* Custom text colors */
 val White = Color(0xFFFFFFFF)
+
+/* Gradient Colors */
+val GradientStart = Color(0xFF4C5F18)
+val GradientEnd = Color(0xFF2E9E6F)
