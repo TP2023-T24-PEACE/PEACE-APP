@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +27,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.destinations.LoginScreenDestination
+import com.t24.peaceapp.ui.destinations.IntroductionScreenDestination
 
 
 @RootNavGraph(start = true)
@@ -40,11 +41,12 @@ fun SplashScreen(
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                colors = listOf(
-                    Color(0xFF4C5F18), Color(0xFF2E9E6F)
-                ),
-                tileMode = TileMode.Repeated
-            )),
+                    colors = listOf(
+                        Color(0xFF4C5F18), Color(0xFF2E9E6F)
+                    ),
+                    tileMode = TileMode.Repeated
+                )
+            ).padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -68,11 +70,12 @@ fun SplashScreen(
         Spacer(modifier = Modifier.weight(0.01f))
         Button(
             contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),
+            elevation = ButtonDefaults.buttonElevation(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF5CDB5C),
                 contentColor = Color.White),
             onClick = {
-                navigator.navigate(LoginScreenDestination)
+                navigator.navigate(IntroductionScreenDestination)
             }) {
             Text(
                 fontSize = 24.sp,
