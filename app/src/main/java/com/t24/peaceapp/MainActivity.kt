@@ -43,7 +43,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DestinationsNavHost(navGraph = NavGraphs.root)
+//                    DestinationsNavHost(navGraph = NavGraphs.root)
+                    Dashboard()
                 }
             }
         }
@@ -59,11 +60,14 @@ fun SplashScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(
-            colors = listOf(
-                Color(0xFF4C5F18), Color(0xFF2E9E6F)),
-            tileMode = TileMode.Repeated
-        )),
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFF4C5F18), Color(0xFF2E9E6F)
+                    ),
+                    tileMode = TileMode.Repeated
+                )
+            ),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
