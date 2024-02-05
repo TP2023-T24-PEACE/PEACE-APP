@@ -1,6 +1,7 @@
 package com.t24.peaceapp
 
 
+import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -91,7 +92,7 @@ fun InfoPanel(){
             }
 
             Column {
-                Icon(painter = painterResource(id = R.drawable.settings), contentDescription = "Settings" )
+                Image(painter = painterResource(id = R.drawable.settings), contentDescription = "Settings" )
             }
         }    }
 }
@@ -141,7 +142,7 @@ fun DailyTasks(){
                 .padding(16.dp)
 
         ) {
-            Icon(painter = painterResource(id = R.drawable.mood_records), contentDescription = "Mood Records", tint = Color.White)
+            Image(painter = painterResource(id = R.drawable.mood_records), contentDescription = "Mood Records")
             Text(text = "Záznam nálady", style = TextStyle(color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold))
 
         }
@@ -167,7 +168,7 @@ fun DailyTasks(){
                 .padding(16.dp)
 
         ) {
-            Icon(painter = painterResource(id = R.drawable.questionmark), contentDescription = "Questions", tint = Color.White)
+            Image(painter = painterResource(id = R.drawable.questionmark), contentDescription = "Questions")
             Text(text = "Otázky", style = TextStyle(color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold))
 
         }
@@ -215,7 +216,7 @@ fun Last7days(
                     )
                 )
         ) {
-            Icon(painter = painterResource(id = R.drawable.mood_graph), contentDescription = "Last 7 Days Graph" )
+            Image(painter = painterResource(id = R.drawable.mood_graph), contentDescription = "Last 7 Days Graph" )
         }
     }
 
@@ -269,10 +270,9 @@ fun PriorityOfTheMonth(
                     .fillMaxSize()
                     .padding(16.dp) // Adjust the padding as needed
             ) {
-                Icon(
+                Image(
                     painter = painterResource(id = R.drawable.sleep),
-                    contentDescription = "Sleep",
-                    tint = Color.White,
+                    contentDescription = "Sleep"
                 )
 //                Spacer(modifier = Modifier.width(8.dp)) // Adjust the spacing between icon and text
                 Text(
@@ -333,10 +333,10 @@ fun MoodAnalysis(
                     .fillMaxSize()
                     .padding(16.dp) // Adjust the padding as needed
             ) {
-                Icon(
+                Image(
                     painter = painterResource(id = R.drawable.sleep),
-                    contentDescription = "",
-                    tint = Color.White,
+                    contentDescription = "Sleep",
+
                 )
 //                Spacer(modifier = Modifier.width(8.dp)) // Adjust the spacing between icon and text
                 Text(
