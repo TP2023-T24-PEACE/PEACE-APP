@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +26,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -83,11 +84,11 @@ fun InfoPanel(){
         ) {
 
             Column {
-                Text(text = "2", style = TextStyle(color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold))
+                Text(text = "2", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
 
             }
             Column {
-                Text(text = "Domov", style = TextStyle(color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold))
+                Text(text = "Domov", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
             }
 
             Column {
@@ -108,7 +109,8 @@ fun DailyTasks(){
     ) {
         Text(
             text = "Tvoje úlohy na dnes",
-            style = TextStyle(color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
         )
     }
 
@@ -141,8 +143,16 @@ fun DailyTasks(){
                 .padding(16.dp)
 
         ) {
-            Image(painter = painterResource(id = R.drawable.mood_records), contentDescription = "Mood Records")
-            Text(text = "Záznam nálady", style = TextStyle(color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold))
+
+            Image(painter = painterResource(id = R.drawable.mood_records), contentDescription = "Mood Records",
+                modifier = Modifier.size(96.dp)
+            )
+            Text(text = "Záznam nálady", style = MaterialTheme.typography.labelSmall,
+                fontWeight = FontWeight.Bold, fontSize = 14.sp
+//                modifier = Modifier.padding(top = 10.dp)
+                )
+//            Image(painter = painterResource(id = R.drawable.questionmark), contentDescription = "Questions")
+//
 
         }
 
@@ -168,7 +178,7 @@ fun DailyTasks(){
 
         ) {
             Image(painter = painterResource(id = R.drawable.questionmark), contentDescription = "Questions")
-            Text(text = "Otázky", style = TextStyle(color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold))
+            Text(text = "Otázky", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, fontSize = 14.sp)
 
         }
 
@@ -180,6 +190,13 @@ fun DailyTasks(){
 @Composable
 fun Last7days(
 ){
+    val gradient = Brush.verticalGradient(
+        0.0f to Color(0xFF0C9442),
+        1.0f to Color(0xFF3B5307),
+        startY = 0.0f,
+        endY = 1500.0f
+    )
+
     Row (
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -189,15 +206,16 @@ fun Last7days(
     )
     {
         Text(
-            text = "Poslednych 7 dni",
-            style = TextStyle(color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            text = "Posledných 7 dní",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
         )
     }
     Row (
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(start = 24.dp, end = 24.dp, bottom = 24.dp, top = 8.dp)
+            .padding(start = 24.dp, end = 24.dp, bottom = 24.dp, top = 4.dp)
             .fillMaxWidth()
             .aspectRatio(2f)
     )
@@ -206,16 +224,19 @@ fun Last7days(
             modifier = Modifier
                 .fillMaxSize()
                 .clip(RoundedCornerShape(20.dp))
-                .background(
-                    brush = Brush.linearGradient(
-                        0.0f to Color(0xFF0C9442),
-                        500.0f to Color(0xFF3B5307),
-                        start = Offset.Zero,
-                        end = Offset.Infinite
-                    )
-                )
+//                .background(
+//                    gradient
+//                    brush = Brush.linearGradient(
+//                        0.0f to Color(0xFF0C9442),
+//                        500.0f to Color(0xFF3B5307),
+//                        start = Offset.Zero,
+//                        end = Offset.Infinite
+//                    )
+
         ) {
-            Image(painter = painterResource(id = R.drawable.mood_graph), contentDescription = "Last 7 Days Graph" )
+            Image(painter = painterResource(id = R.drawable.mood_graph), contentDescription = "Last 7 Days Graph",
+                modifier = Modifier.fillMaxSize()
+                )
         }
     }
 
@@ -237,7 +258,8 @@ fun PriorityOfTheMonth(
     {
         Text(
             text = "Priorita na tento mesiac",
-            style = TextStyle(color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
         )
     }
     Row (
@@ -275,7 +297,7 @@ fun PriorityOfTheMonth(
                 )
 //                Spacer(modifier = Modifier.width(8.dp)) // Adjust the spacing between icon and text
                 Text(
-                    text = "Spanok",
+                    text = "Spánok",
                     color = Color.White,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
@@ -299,8 +321,9 @@ fun MoodAnalysis(
     )
     {
         Text(
-            text = "Analyza tvojej nalady",
-            style = TextStyle(color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            text = "Analýza tvojej nálady",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
         )
     }
     Row (
@@ -339,7 +362,7 @@ fun MoodAnalysis(
                 )
 //                Spacer(modifier = Modifier.width(8.dp)) // Adjust the spacing between icon and text
                 Text(
-                    text = "Analyza",
+                    text = "Analýza",
                     color = Color.White,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
