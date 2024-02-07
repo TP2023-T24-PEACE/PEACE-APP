@@ -44,7 +44,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 //                    DestinationsNavHost(navGraph = NavGraphs.root)
-                    Dashboard()
+//                      Dashboard()
+                    Moodtracking2()
                 }
             }
         }
