@@ -56,7 +56,7 @@ fun Moodtracking2() {
 
         Column{
             StepIndicator(currentStep = 2, totalSteps = 3)
-            MoodSelector(moods =
+            MoodReasonSelector(moods =
             listOf(
                 Mood(
                     title = "Štastný",
@@ -168,100 +168,219 @@ fun Moodtracking2() {
                     selected = false
                 )
             ),
-                selectedMoods = selectedMoods,
-                onMoodSelected = { mood ->
-                    selectedMoods = if (selectedMoods.contains(mood)) {
-                        selectedMoods.filter { it != mood }
-                    } else {
-                        selectedMoods + mood
-                    }
-                }
+                "Pomôž nám lepšie pochopiť tvoju náladu"
+
             )
+
+
+//            MoodSelector(moods =
+//            listOf(
+//                Mood(
+//                    title = "Štastný",
+//                    iconId = R.drawable.smiling_face,
+//                    moodValue = 2,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Vyčerpaný",
+//                    iconId = R.drawable.exhausted_face,
+//                    moodValue = 3,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Smutný",
+//                    iconId = R.drawable.crying_face,
+//                    moodValue = 4,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Vyčerpaný",
+//                    iconId = R.drawable.exhausted_face,
+//                    moodValue = 3,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Štastný",
+//                    iconId = R.drawable.smiling_face,
+//                    moodValue = 2,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Smutný",
+//                    iconId = R.drawable.crying_face,
+//                    moodValue = 4,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Vyčerpaný",
+//                    iconId = R.drawable.exhausted_face,
+//                    moodValue = 3,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Smutný",
+//                    iconId = R.drawable.crying_face,
+//                    moodValue = 4,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Štastný",
+//                    iconId = R.drawable.smiling_face,
+//                    moodValue = 2,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Smutný",
+//                    iconId = R.drawable.crying_face,
+//                    moodValue = 4,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Štastný",
+//                    iconId = R.drawable.smiling_face,
+//                    moodValue = 2,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Vyčerpaný",
+//                    iconId = R.drawable.exhausted_face,
+//                    moodValue = 3,
+//                    selected = false
+//                ),
+//
+//                Mood(
+//                    title = "Štastný",
+//                    iconId = R.drawable.smiling_face,
+//                    moodValue = 2,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Vyčerpaný",
+//                    iconId = R.drawable.exhausted_face,
+//                    moodValue = 3,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Smutný",
+//                    iconId = R.drawable.crying_face,
+//                    moodValue = 4,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Štastný",
+//                    iconId = R.drawable.smiling_face,
+//                    moodValue = 2,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Vyčerpaný",
+//                    iconId = R.drawable.exhausted_face,
+//                    moodValue = 3,
+//                    selected = false
+//                ),
+//                Mood(
+//                    title = "Smutný",
+//                    iconId = R.drawable.crying_face,
+//                    moodValue = 4,
+//                    selected = false
+//                )
+//            ),
+//                selectedMoods = selectedMoods,
+//                onMoodSelected = { mood ->
+//                    selectedMoods = if (selectedMoods.contains(mood)) {
+//                        selectedMoods.filter { it != mood }
+//                    } else {
+//                        selectedMoods + mood
+//                    }
+//                }
+//            )
         }
-        BottomMenu(modifier = Modifier
-            .align(Alignment.BottomCenter)
-            .fillMaxWidth(),
-            selectedMoods = selectedMoods,
-            onButtonClicked = {
-                // Handle the button click here, for example, print the selected moods
-                selectedMoods.forEach { mood ->
-                    println("Selected Mood: ${mood.title}")
-                }
-            }
-        )
+        BottomMenu2(modifier = Modifier.align(Alignment.BottomCenter). fillMaxWidth())
+
+//        BottomMenu(modifier = Modifier
+//            .align(Alignment.BottomCenter)
+//            .fillMaxWidth(),
+//            selectedMoods = selectedMoods,
+//            onButtonClicked = {
+//                // Handle the button click here, for example, print the selected moods
+//                selectedMoods.forEach { mood ->
+//                    println("Selected Mood: ${mood.title}")
+//                }
+//            }
+//        )
     }
 
 }
 
 
 
-@Composable
-fun BottomMenu(modifier: Modifier,
-               selectedMoods: List<Mood>,
-               onButtonClicked: () -> Unit){
-    Row (
-        horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .padding( 15.dp)
-
-    ) {
-
-        Image(painter = painterResource(id = R.drawable.arrow_left), contentDescription = "Back Button")
-
-        Box(modifier = Modifier
-            .padding(10.dp)
-//            .width(250.dp)
-            .clip(RoundedCornerShape(50.dp))
-            .background(Color(0xFF5CDB5C))
-            .padding(horizontal = 30.dp, vertical = 12.dp)
-            .clickable(onClick = onButtonClicked)
-        ){
-
-            Text(text = "Pokračovať", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, textAlign = TextAlign.Start)
-        }
-    }
-
-}
-
-
-@Composable
-fun MoodSelector(moods: List<Mood>,
-                 selectedMoods: List<Mood>,
-                 onMoodSelected: (Mood) -> Unit
-                 ){
-
-    Column (modifier = Modifier
-        .fillMaxWidth()
-        .padding(bottom = 110.dp)
-    ) {
-
-        Text(text = "Pomôž nám lepšie pochopiť tvoju náladu",
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-        )
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            contentPadding = PaddingValues(start = 7.5.dp, end = 7.5.dp),
-            modifier = Modifier.fillMaxHeight())
-        {
-            items(moods.size){index ->
-                val mood = moods[index]
-                val isSelected = selectedMoods.contains(mood)
-                MoodItem(
-                    mood = mood,
-                    isSelected = isSelected,
-                    onMoodSelected = { onMoodSelected(mood) }
-                )
-            }
-        }
+//@Composable
+//fun BottomMenu(modifier: Modifier,
+//               selectedMoods: List<Mood>,
+//               onButtonClicked: () -> Unit){
+//    Row (
+//        horizontalArrangement = Arrangement.SpaceAround,
+//        verticalAlignment = Alignment.CenterVertically,
+//        modifier = modifier
+//            .padding( 15.dp)
+//
+//    ) {
+//
+//        Image(painter = painterResource(id = R.drawable.arrow_left), contentDescription = "Back Button")
+//
+//        Box(modifier = Modifier
+//            .padding(10.dp)
+////            .width(250.dp)
+//            .clip(RoundedCornerShape(50.dp))
+//            .background(Color(0xFF5CDB5C))
+//            .padding(horizontal = 30.dp, vertical = 12.dp)
+//            .clickable(onClick = onButtonClicked)
+//        ){
+//
+//            Text(text = "Pokračovať", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, textAlign = TextAlign.Start)
+//        }
+//    }
+//
+//}
 
 
-    }
-}
+//@Composable
+//fun MoodSelector(moods: List<Mood>,
+//                 selectedMoods: List<Mood>,
+//                 onMoodSelected: (Mood) -> Unit
+//                 ){
+//
+//    Column (modifier = Modifier
+//        .fillMaxWidth()
+//        .padding(bottom = 110.dp)
+//    ) {
+//
+//        Text(text = "Pomôž nám lepšie pochopiť tvoju náladu",
+//            textAlign = TextAlign.Center,
+//            style = MaterialTheme.typography.titleLarge,
+//            modifier = Modifier
+//                .padding(bottom = 16.dp)
+//        )
+//
+//        LazyVerticalGrid(
+//            columns = GridCells.Fixed(3),
+//            contentPadding = PaddingValues(start = 7.5.dp, end = 7.5.dp),
+//            modifier = Modifier.fillMaxHeight())
+//        {
+//            items(moods.size){index ->
+//                val mood = moods[index]
+//                val isSelected = selectedMoods.contains(mood)
+//                MoodItem(
+//                    mood = mood,
+//                    isSelected = isSelected,
+//                    onMoodSelected = { onMoodSelected(mood) }
+//                )
+//            }
+//        }
+//
+//
+//    }
+//}
 
 
 //@Composable
@@ -269,22 +388,18 @@ fun MoodSelector(moods: List<Mood>,
 //    mood: Mood,
 //    isSelected: Boolean,
 //    onMoodSelected: () -> Unit
-//){
-////    var isSelected by remember { mutableStateOf(false) }
-//
-//    Box(modifier = Modifier
-//        .padding(6.dp)
-//        .fillMaxSize()
-//        .clip(RoundedCornerShape(20.dp))
-//        .background(
-//            if (isSelected) Color(0xFF64AD41) else Color(0xFF94CC79)
-//        )
-//        .padding(15.dp)
-//        .clickable {
-//           isSelected = !isSelected;
-//        }
-//        .aspectRatio(1f)
-//
+//) {
+//    Box(
+//        modifier = Modifier
+//            .padding(6.dp)
+//            .fillMaxSize()
+//            .clip(RoundedCornerShape(20.dp))
+//            .background(
+//                if (isSelected) Color(0xFF64AD41) else Color(0xFF94CC79)
+//            )
+//            .padding(15.dp)
+//            .clickable(onClick = onMoodSelected)
+//            .aspectRatio(1f)
 //    ) {
 //        Image(
 //            painter = painterResource(id = mood.iconId),
@@ -301,44 +416,6 @@ fun MoodSelector(moods: List<Mood>,
 //            fontSize = 14.sp,
 //            fontWeight = FontWeight.Bold
 //        )
-//
 //    }
 //}
-
-
-@Composable
-fun MoodItem(
-    mood: Mood,
-    isSelected: Boolean,
-    onMoodSelected: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .padding(6.dp)
-            .fillMaxSize()
-            .clip(RoundedCornerShape(20.dp))
-            .background(
-                if (isSelected) Color(0xFF64AD41) else Color(0xFF94CC79)
-            )
-            .padding(15.dp)
-            .clickable(onClick = onMoodSelected)
-            .aspectRatio(1f)
-    ) {
-        Image(
-            painter = painterResource(id = mood.iconId),
-            contentDescription = mood.title,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .size(56.dp)
-                .padding(bottom = 4.dp)
-        )
-        Text(
-            text = mood.title,
-            modifier = Modifier.align(Alignment.BottomCenter),
-            style = MaterialTheme.typography.bodyLarge,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
 
