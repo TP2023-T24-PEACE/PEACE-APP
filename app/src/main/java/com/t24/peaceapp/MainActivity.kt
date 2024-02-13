@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    DestinationsNavHost(navGraph = NavGraphs.root)
 //                      Dashboard()
-                    Moodtracking2()
+                    Moodtracking1()
                 }
             }
         }
