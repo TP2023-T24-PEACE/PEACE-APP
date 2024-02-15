@@ -26,8 +26,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import kotlin.math.roundToInt
-
 
 @Composable
 fun Moodtracking1 () {
@@ -48,7 +46,7 @@ fun Moodtracking1 () {
             MoodSlider()
 
         }
-            BottomMenu2(modifier = Modifier
+            BottomMenu(modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth())
 
@@ -71,13 +69,7 @@ fun MoodSlider(){
         R.drawable.red_verysad
     )
 
-//    val selectedImageIndex = sliderPosition.toInt().coerceIn(0, moodImages.lastIndex)
 
-    // Calculate the index based on the slider's value
-//    val selectedImageIndex = ((sliderPosition *  5).roundToInt()).coerceIn(0, moodImages.lastIndex)
-
-
-//    when statement for the selectedImageIndex to display the correct image based on the slider's value with 0.2f steps
     val selectedImageIndex = when (sliderPosition) {
         in 0.0f..0.2f -> 4
         in 0.2f..0.4f -> 3
@@ -102,9 +94,7 @@ fun MoodSlider(){
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            Column(
-//                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+            Column {
 
                 val selectedImageId = moodImages[selectedImageIndex]
                 Image(

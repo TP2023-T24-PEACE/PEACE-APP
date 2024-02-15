@@ -43,9 +43,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    DestinationsNavHost(navGraph = NavGraphs.root)
-//                      Dashboard()
-                    Moodtracking1()
+                    DestinationsNavHost(navGraph = NavGraphs.root)
                 }
             }
         }
