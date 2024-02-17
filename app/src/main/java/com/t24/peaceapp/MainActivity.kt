@@ -51,6 +51,7 @@ class MainActivity : ComponentActivity() {
 }
 
 
+
 @Destination(start = true)
 @Composable
 fun SplashScreen(
