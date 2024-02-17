@@ -1,6 +1,7 @@
 package com.t24.peaceapp.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -21,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
@@ -38,6 +42,11 @@ fun IntroductionScreen(
 
     var name by remember { mutableStateOf("") }
     var age by remember { mutableStateOf("") }
+    var gender by remember { mutableStateOf("") }
+
+    var colorsInactive = ButtonDefaults.buttonColors(containerColor = Color.White)
+    var colorsActive = ButtonDefaults.buttonColors(containerColor = Color(0xFF64AD41))
+
 
     Column(
         modifier = Modifier
@@ -63,6 +72,7 @@ fun IntroductionScreen(
         TextField(
                 value = name,
                 textStyle = TextStyle(color = Color.Black),
+                modifier = Modifier.width(300.dp),
                 onValueChange = { name = it },
                 label = { Text(
                     text = "Krstné meno",
@@ -71,42 +81,47 @@ fun IntroductionScreen(
                 shape = MaterialTheme.shapes.extraLarge,
             )
         Spacer(modifier = Modifier.weight(0.01f))
-        Row {
+        Row(
+            modifier = Modifier.width(300.dp)
+        ){
             /* Gender */
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {gender = "male"},
                 modifier = Modifier.weight(0.5f),
-                colors = ButtonDefaults.buttonColors(),
+                colors = if(gender == "male") {colorsActive} else {colorsInactive},
                 contentPadding = PaddingValues(0.dp),
-                shape = MaterialTheme.shapes.extraLarge,
+                shape = RoundedCornerShape(50.dp, 0.dp, 0.dp, 50.dp),
             ) {
                 Text(
                     text = "Muž",
                     style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Black
                 )
             }
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {gender = "non-binary"},
                 modifier = Modifier.weight(0.5f),
-                colors = ButtonDefaults.buttonColors(),
+                colors = if(gender == "non-binary") {colorsActive} else {colorsInactive},
                 contentPadding = PaddingValues(0.dp),
-                shape = MaterialTheme.shapes.extraLarge,
+                shape = RoundedCornerShape(0.dp),
             ) {
                 Text(
                     text = "Nebinárne",
                     style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Black
                 )
             }
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {gender = "female"},
                 modifier = Modifier.weight(0.5f),
-                colors = ButtonDefaults.buttonColors(),
+                colors = if(gender == "female") {colorsActive} else {colorsInactive},
                 contentPadding = PaddingValues(0.dp),
-                shape = MaterialTheme.shapes.extraLarge,
+                shape = RoundedCornerShape(0.dp, 50.dp, 50.dp, 0.dp),
             ) {
                 Text(
                     text = "Žena",
                     style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Black
                 )
             }
         }
@@ -114,6 +129,7 @@ fun IntroductionScreen(
         TextField(
             value = age,
             textStyle = TextStyle(color = Color.Black),
+            modifier = Modifier.width(300.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             onValueChange = { age = it },
             label = { Text(
