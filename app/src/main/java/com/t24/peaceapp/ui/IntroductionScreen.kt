@@ -26,6 +26,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,17 +41,23 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
+import com.t24.peaceapp.ui.destinations.HomeScreenDestination
+import com.t24.peaceapp.ui.destinations.IntroductionScreenDestination
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable
 fun IntroductionScreen(
+    navigator: DestinationsNavigator
 ) {
 
     var name by remember { mutableStateOf("") }
@@ -148,8 +155,26 @@ fun IntroductionScreen(
             ) },
             shape = MaterialTheme.shapes.extraLarge,
         )
+        ReasonDropdown()
         Spacer(modifier = Modifier.weight(0.01f))
-        Demo_ExposedDropdownMenuBox()
+        Button(
+            contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),
+            elevation = ButtonDefaults.buttonElevation(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF5CDB5C),
+                contentColor = Color.White),
+            onClick = {
+                navigator.navigate(HomeScreenDestination)
+            }) {
+            Text(
+                fontSize = 24.sp,
+                fontWeight = FontWeight.ExtraBold,
+                text = "POKRAČOVAŤ",
+                color = Color.White)
+        }
+        Spacer(
+            modifier = Modifier.weight(0.01f)
+        )
         }
 
     }
@@ -157,13 +182,14 @@ fun IntroductionScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Demo_ExposedDropdownMenuBox() {
+fun ReasonDropdown() {
     val coffeeDrinks = arrayOf(
-        "Aký je tvoj dôvod stiahnutia aplikácie?",
+        "",
         "Chcem sa cítiť lepšie",
         "Chcem byť produktívnejší",
         "Chcem si zlepšiť spánok",
-        "Chcem sa zbaviť zlých návykov"
+        "Chcem sa zbaviť zlých návykov",
+        "Iný dôvod"
     )
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf(coffeeDrinks[0]) }
@@ -180,20 +206,39 @@ fun Demo_ExposedDropdownMenuBox() {
             }
         ) {
             TextField(
+                label = { Text(
+                    text = "Aký je tvoj dôvod stiahnutia aplikácie?",
+                    style = MaterialTheme.typography.bodySmall,
+                ) },
                 value = selectedText,
                 onValueChange = {},
                 readOnly = true,
+                shape = MaterialTheme.shapes.extraLarge,
+                textStyle = TextStyle(color = Color.Black),
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    disabledTextColor = Color.Black,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    focusedLabelColor = Color.Black,
+                    unfocusedLabelColor = Color.Black,
+                ),
                 modifier = Modifier.menuAnchor()
             )
 
             ExposedDropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = { expanded = false },
             ) {
                 coffeeDrinks.forEach { item ->
                     DropdownMenuItem(
-                        text = { Text(text = item) },
+                        text = { Text(text = item,
+                            color = Color.Black,
+                            fontSize = 12.sp
+                            ) },
                         onClick = {
                             selectedText = item
                             expanded = false

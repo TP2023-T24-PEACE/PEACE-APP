@@ -7,7 +7,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 
 @Destination
@@ -18,6 +20,9 @@ fun HomeScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Home Screen", textAlign = TextAlign.Center)
+        Text(text = "Home Screen", textAlign = TextAlign.Center,
+            fontSize = 24.sp,
+            color = Color.Black
+        )
     }
 }
