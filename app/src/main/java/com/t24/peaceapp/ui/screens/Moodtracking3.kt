@@ -1,16 +1,20 @@
-package com.t24.peaceapp
+package com.t24.peaceapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,12 +24,22 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.spec.Direction
+import com.t24.peaceapp.Mood
+import com.t24.peaceapp.R
+import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
+import com.t24.peaceapp.ui.screens.destinations.Moodtracking2Destination
 
 
+@Destination
 @Composable
-fun Moodtracking3() {
+fun Moodtracking3(
+    navigator: DestinationsNavigator
+) {
 
     val gradient = Brush.verticalGradient(
         0.0f to Color(0xBF4C5F18),
@@ -155,7 +169,7 @@ fun Moodtracking3() {
                 "Prečo sa takto cítiš?"
             )
         }
-        BottomMenu(modifier = Modifier.align(Alignment.BottomCenter). fillMaxWidth())
+        BottomMenu(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(), navigator, Moodtracking2Destination, DashboardDestination)
     }
 
 }
@@ -163,8 +177,7 @@ fun Moodtracking3() {
 
 
 @Composable
-fun BottomMenu(modifier: Modifier,
-               ){
+fun BottomMenu(modifier: Modifier, navigator: DestinationsNavigator, prevDestination: Direction, nextDestination: Direction){
     Row (
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically,
@@ -173,7 +186,13 @@ fun BottomMenu(modifier: Modifier,
 
     ) {
 
-        Image(painter = painterResource(id = R.drawable.arrow_left), contentDescription = "Back Button")
+        Image(
+            painter = painterResource(id = R.drawable.arrow_left),
+            contentDescription = "Back Button",
+            modifier = Modifier.clickable {
+                navigator.navigate(prevDestination)
+            }
+        )
 
         Box(modifier = Modifier
             .padding(10.dp)
@@ -183,11 +202,26 @@ fun BottomMenu(modifier: Modifier,
             .padding(horizontal = 30.dp, vertical = 12.dp)
 
         ){
-
-            Text(text = "Pokračovať", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, textAlign = TextAlign.Start)
+            Button(
+                contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),
+                elevation = ButtonDefaults.buttonElevation(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF5CDB5C),
+                    contentColor = Color.White),
+                onClick = {
+                    navigator.navigate(nextDestination)
+                }) {
+                Text(
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    text = "POKRAČOVAŤ",
+                    color = Color.White)
+                Spacer(
+                    modifier = Modifier.weight(0.01f)
+                )
+            }
         }
     }
 
 }
-
 

@@ -1,9 +1,10 @@
-package com.t24.peaceapp
+package com.t24.peaceapp.ui.screens
 
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,11 +30,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.t24.peaceapp.R
+import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
 
 
-
+@Destination
 @Composable
-fun Dashboard(){
+fun Dashboard(navigator: DestinationsNavigator){
     val gradient = Brush.verticalGradient(
         0.0f to Color(0xBF4C5F18),
         1.0f to Color(0xBF2E9E6F),
@@ -54,7 +59,7 @@ fun Dashboard(){
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
             ) {
-                DailyTasks()
+                DailyTasks(navigator)
                 Last7days()
                 PriorityOfTheMonth()
                 MoodAnalysis()
@@ -100,7 +105,9 @@ fun InfoPanel(){
 
 
 @Composable
-fun DailyTasks(){
+fun DailyTasks(
+    navigator: DestinationsNavigator
+){
 
     Row (
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -141,6 +148,9 @@ fun DailyTasks(){
                     )
                 )
                 .padding(16.dp)
+                .clickable {
+                    navigator.navigate(Moodtracking1Destination)
+                }
 
         ) {
 
@@ -190,13 +200,6 @@ fun DailyTasks(){
 @Composable
 fun Last7days(
 ){
-    val gradient = Brush.verticalGradient(
-        0.0f to Color(0xFF0C9442),
-        1.0f to Color(0xFF3B5307),
-        startY = 0.0f,
-        endY = 1500.0f
-    )
-
     Row (
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

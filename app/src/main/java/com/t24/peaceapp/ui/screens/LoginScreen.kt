@@ -1,4 +1,4 @@
-package com.t24.peaceapp.ui
+package com.t24.peaceapp.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.t24.peaceapp.ui.destinations.HomeScreenDestination
+import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
 
 @Destination
 @Composable
@@ -25,7 +25,7 @@ fun LoginScreen(
     ) {
         Text(text = "Login Screen", textAlign = TextAlign.Center)
         Button(onClick = {
-            navigator.navigate(HomeScreenDestination)
+            navigator.navigate(DashboardDestination)
         }) {
             Text(text = "Go to Home")
         }

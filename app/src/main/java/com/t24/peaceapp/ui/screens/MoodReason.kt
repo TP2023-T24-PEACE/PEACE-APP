@@ -1,4 +1,4 @@
-package com.t24.peaceapp
+package com.t24.peaceapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.t24.peaceapp.Mood
 
 @Composable
 fun MoodReason(

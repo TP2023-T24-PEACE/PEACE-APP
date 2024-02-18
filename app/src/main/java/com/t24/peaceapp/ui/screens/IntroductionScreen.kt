@@ -1,9 +1,7 @@
-package com.t24.peaceapp.ui
+package com.t24.peaceapp.ui.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,11 +32,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -49,11 +45,9 @@ import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.destinations.HomeScreenDestination
-import com.t24.peaceapp.ui.destinations.IntroductionScreenDestination
+import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable
 fun IntroductionScreen(
@@ -64,8 +58,8 @@ fun IntroductionScreen(
     var age by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
 
-    var colorsInactive = ButtonDefaults.buttonColors(containerColor = Color.White)
-    var colorsActive = ButtonDefaults.buttonColors(containerColor = Color(0xFF64AD41))
+    val colorsInactive = ButtonDefaults.buttonColors(containerColor = Color.White)
+    val colorsActive = ButtonDefaults.buttonColors(containerColor = Color(0xFF64AD41))
 
 
     Column(
@@ -164,7 +158,7 @@ fun IntroductionScreen(
                 containerColor = Color(0xFF5CDB5C),
                 contentColor = Color.White),
             onClick = {
-                navigator.navigate(HomeScreenDestination)
+                navigator.navigate(DashboardDestination)
             }) {
             Text(
                 fontSize = 24.sp,

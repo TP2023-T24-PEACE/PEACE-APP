@@ -1,4 +1,4 @@
-package com.t24.peaceapp.ui
+package com.t24.peaceapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,7 +27,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.destinations.IntroductionScreenDestination
+import com.t24.peaceapp.ui.screens.destinations.IntroductionScreenDestination
 
 
 @RootNavGraph(start = true)
