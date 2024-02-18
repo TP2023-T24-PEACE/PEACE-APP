@@ -1,4 +1,4 @@
-package com.t24.peaceapp
+package com.t24.peaceapp.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

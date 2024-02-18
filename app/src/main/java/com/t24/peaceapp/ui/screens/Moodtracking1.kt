@@ -1,4 +1,4 @@
-package com.t24.peaceapp
+package com.t24.peaceapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,9 +26,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.t24.peaceapp.R
+import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
+import com.t24.peaceapp.ui.screens.destinations.Moodtracking2Destination
 
+@Destination
 @Composable
-fun Moodtracking1 () {
+fun Moodtracking1 (
+    navigator: DestinationsNavigator
+) {
 
     val gradient = Brush.verticalGradient(
         0.0f to Color(0xBF4C5F18),
@@ -46,9 +54,7 @@ fun Moodtracking1 () {
             MoodSlider()
 
         }
-            BottomMenu(modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth())
+        BottomMenu(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(), navigator, DashboardDestination, Moodtracking2Destination)
 
 
     }
