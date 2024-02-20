@@ -61,6 +61,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
+
+    // Tinder-like swipeable card
+    implementation("com.alexstyl.swipeablecard:swipeablecard:0.1.0")
+
     // Compose Destinations
     implementation("io.github.raamcosta.compose-destinations:core:1.10.0")
     ksp("io.github.raamcosta.compose-destinations:ksp:1.10.0")
