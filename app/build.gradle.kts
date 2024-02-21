@@ -67,6 +67,7 @@ dependencies {
 
     // Compose Destinations
     implementation("io.github.raamcosta.compose-destinations:core:1.10.0")
+    implementation("androidx.constraintlayout:constraintlayout-compose-android:1.1.0-alpha13")
     ksp("io.github.raamcosta.compose-destinations:ksp:1.10.0")
 
     testImplementation("junit:junit:4.13.2")
