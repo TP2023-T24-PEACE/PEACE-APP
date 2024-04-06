@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
+import com.t24.peaceapp.ui.screens.destinations.LoginScreenDestination
 
 
 @Destination
@@ -87,6 +87,7 @@ fun IntroductionScreen(
                 value = name,
                 textStyle = TextStyle(color = Color.Black),
                 modifier = Modifier.width(300.dp),
+                singleLine = true,
                 onValueChange = { name = it },
                 label = { Text(
                     text = "Krstné meno",
@@ -139,6 +140,7 @@ fun IntroductionScreen(
         Spacer(modifier = Modifier.weight(0.01f))
         TextField(
             value = age,
+            singleLine = true,
             textStyle = TextStyle(color = Color.Black),
             modifier = Modifier.width(300.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -158,7 +160,8 @@ fun IntroductionScreen(
                 containerColor = Color(0xFF5CDB5C),
                 contentColor = Color.White),
             onClick = {
-                navigator.navigate(DashboardDestination)
+                navigator.navigate(LoginScreenDestination)
+
             }) {
             Text(
                 fontSize = 24.sp,
@@ -207,6 +210,7 @@ fun ReasonDropdown() {
                 value = selectedText,
                 onValueChange = {},
                 readOnly = true,
+                singleLine = true,
                 shape = MaterialTheme.shapes.extraLarge,
                 textStyle = TextStyle(color = Color.Black),
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
