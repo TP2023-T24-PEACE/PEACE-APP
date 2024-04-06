@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -32,7 +32,6 @@ import com.alexstyl.swipeablecard.swipableCard
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
-import com.t24.peaceapp.ui.screens.destinations.Moodtracking2Destination
 
 @OptIn(ExperimentalSwipeableCardApi::class)
 @Destination
@@ -47,18 +46,20 @@ fun Questions (
         startY = 0.0f,
         endY = 1500.0f
     )
-    Box (
+    Box(
         modifier = Modifier
             .background(gradient)
             .fillMaxSize()
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
+                .fillMaxHeight()
+                .fillMaxWidth()
         ) {
 
             var currentStep by remember { mutableStateOf(1) }
-            StepIndicator(currentStep = currentStep, totalSteps = 5)
+            StepIndicator(currentStep = currentStep, totalSteps = 5 )
             val state1 = rememberSwipeableCardState()
             val state2 = rememberSwipeableCardState()
             val state3 = rememberSwipeableCardState()
@@ -70,19 +71,20 @@ fun Questions (
                 "2 How are you feeling today?",
                 "3 How are you feeling today?",
                 "4 How are you feeling today?",
-                "5 How are you feeling today?"
+                "5 How are you feeling today?",
             )
             // stack of 5 questions on top of each other
 
             Box(
                 modifier = Modifier
+                    .padding(8.dp)
+                    .padding(top = 40.dp)
                     .fillMaxSize()
                     .swipableCard(
                         state = state1,
                         onSwiped = {
                             currentStep++
                         }
-
                     )
             ) {
                 Box(
@@ -101,7 +103,7 @@ fun Questions (
                 ) {
                     Text(
                         text = questions[0],
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().align(Alignment.Center),
                         color = MaterialTheme.colorScheme.onSurface
@@ -112,6 +114,7 @@ fun Questions (
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(8.dp)
                     .swipableCard(
                         state = state2,
                         onSwiped = {
@@ -136,7 +139,7 @@ fun Questions (
                 ) {
                     Text(
                         text = questions[1],
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().align(Alignment.Center),
                         color = MaterialTheme.colorScheme.onSurface
@@ -147,6 +150,7 @@ fun Questions (
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(8.dp)
                     .swipableCard(
                         state = state3,
                         onSwiped = {
@@ -171,7 +175,7 @@ fun Questions (
                 ) {
                     Text(
                         text = questions[2],
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().align(Alignment.Center),
                         color = MaterialTheme.colorScheme.onSurface
@@ -182,6 +186,7 @@ fun Questions (
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(8.dp)
                     .swipableCard(
                         state = state4,
                         onSwiped = {
@@ -206,7 +211,7 @@ fun Questions (
                 ) {
                     Text(
                         text = questions[3],
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().align(Alignment.Center),
                         color = MaterialTheme.colorScheme.onSurface
@@ -217,6 +222,7 @@ fun Questions (
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(8.dp)
                     .swipableCard(
                         state = state5,
                         onSwiped = {
@@ -241,7 +247,7 @@ fun Questions (
                 ) {
                     Text(
                         text = questions[4],
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().align(Alignment.Center),
                         color = MaterialTheme.colorScheme.onSurface
@@ -250,8 +256,24 @@ fun Questions (
             }
 
         }
-        BottomMenu(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(), navigator, DashboardDestination, Moodtracking2Destination)
+        Text(
+            text = "Prsom potiahni doľava ak nesúhlasíš, doprava ak súhlasíš",
+            style = MaterialTheme.typography.titleSmall,
+            textAlign = TextAlign.Center,
+            color = Color.White,
+            // put over the bottom of the screen
+            modifier = Modifier
+                .width(250.dp)
+                .padding(bottom = 125.dp)
+                .align(Alignment.BottomCenter)
+
+        )
+        BottomMenu(
+            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),
+            navigator,
+            DashboardDestination,
+            DashboardDestination
+        )
     }
 
 }
-
