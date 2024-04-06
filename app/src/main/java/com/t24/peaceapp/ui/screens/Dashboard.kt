@@ -34,6 +34,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
+import com.t24.peaceapp.ui.screens.destinations.QuestionsDestination
 
 
 @Destination
@@ -187,7 +188,14 @@ fun DailyTasks(
                 .padding(16.dp)
 
         ) {
-            Image(painter = painterResource(id = R.drawable.questionmark), contentDescription = "Questions")
+            Image(
+                painter = painterResource(
+                id = R.drawable.questionmark),
+                contentDescription = "Questions",
+                modifier = Modifier.clickable {
+                    navigator.navigate(QuestionsDestination)
+                }
+            )
             Text(text = "Otázky", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, fontSize = 14.sp)
 
         }

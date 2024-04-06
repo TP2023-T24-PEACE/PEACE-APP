@@ -27,7 +27,8 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.screens.destinations.IntroductionScreenDestination
+import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
+import com.t24.peaceapp.ui.screens.destinations.LoginScreenDestination
 
 
 @RootNavGraph(start = true)
@@ -36,6 +37,7 @@ import com.t24.peaceapp.ui.screens.destinations.IntroductionScreenDestination
 fun SplashScreen(
     navigator: DestinationsNavigator
 ) {
+    val loggedInUser = null
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -75,7 +77,12 @@ fun SplashScreen(
                 containerColor = Color(0xFF5CDB5C),
                 contentColor = Color.White),
             onClick = {
-                navigator.navigate(IntroductionScreenDestination)
+                if(loggedInUser == null) {
+                    navigator.navigate(LoginScreenDestination)
+                } else {
+                    navigator.navigate(DashboardDestination)
+                }
+
             }) {
             Text(
                 fontSize = 24.sp,
