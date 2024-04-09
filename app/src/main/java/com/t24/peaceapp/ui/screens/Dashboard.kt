@@ -38,7 +38,7 @@ import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.composables.PriorityOfTheWeek
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
 import com.t24.peaceapp.ui.screens.destinations.QuestionsDestination
-import com.t24.peaceapp.ui.destinations.AnalysisScreenDestination
+import com.t24.peaceapp.ui.screens.destinations.AnalysisScreenDestination
 
 @Destination
 @Composable
