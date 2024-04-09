@@ -212,7 +212,7 @@ fun BottomMenu(modifier: Modifier, navigator: DestinationsNavigator, prevDestina
                     navigator.navigate(nextDestination)
                 }) {
                 Text(
-                    fontSize = 24.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.ExtraBold,
                     text = "POKRAČOVAŤ",
                     color = Color.White)

@@ -40,16 +40,17 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
-import com.t24.peaceapp.ui.screens.destinations.RegisterScreenDestination
+import com.t24.peaceapp.ui.screens.destinations.LoginScreenDestination
 
 @Destination
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     navigator: DestinationsNavigator
 ) {
 
     var username by remember { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
+    var passwordAgain by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
     Column(
@@ -69,7 +70,7 @@ fun LoginScreen(
     ) {
         // Login form
         Text(
-            text = "Prihlásenie",
+            text = "Registrácia",
             textAlign = TextAlign.Center,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
@@ -119,6 +120,19 @@ fun LoginScreen(
                     }
                 }
             )
+            TextField(
+                value = passwordAgain,
+                onValueChange = { passwordAgain = it },
+                label = {
+                    Text(
+                        text ="Heslo znova",
+                        fontSize = 12.sp,
+                        color = Color.Black
+                    ) },
+                singleLine = true,
+                placeholder = { Text("Heslo") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+            )
             Button(onClick = {
                 navigator.navigate(DashboardDestination)
             },
@@ -128,7 +142,7 @@ fun LoginScreen(
                     containerColor = Color(0xFF5CDB5C),
                     contentColor = Color.White),
                 ) {
-                Text("Prihlásiť sa", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                Text("Zaregistrovať sa", fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
 
             // 1px divider
@@ -138,7 +152,7 @@ fun LoginScreen(
                 modifier = Modifier.width(280.dp)
             )
             Text(
-                text = "Ešte nemáte účet?",
+                text = "Už máte vytvorený účet?",
                 textAlign = TextAlign.Center,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
@@ -146,7 +160,7 @@ fun LoginScreen(
             )
             // Register button
             OutlinedButton(onClick = {
-                navigator.navigate(RegisterScreenDestination)
+                navigator.navigate(LoginScreenDestination)
             },
                 contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),
                 elevation = ButtonDefaults.buttonElevation(),
@@ -155,7 +169,7 @@ fun LoginScreen(
                     contentColor = Color.White),
                 border = BorderStroke(1.dp, Color(0xFF5CDB5C))
                 ) {
-                Text("Zaregistrujte sa", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                Text("Prihláste sa", fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
         }
     }

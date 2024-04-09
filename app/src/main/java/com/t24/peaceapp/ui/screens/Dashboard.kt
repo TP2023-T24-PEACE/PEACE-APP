@@ -14,13 +14,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,18 +29,16 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
-import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
+import com.t24.peaceapp.ui.composables.PriorityOfTheWeek
+import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
+import com.t24.peaceapp.ui.screens.destinations.QuestionsDestination
 import com.t24.peaceapp.ui.destinations.AnalysisScreenDestination
-import com.t24.peaceapp.ui.destinations.DashboardDestination
-import com.t24.peaceapp.ui.destinations.Moodtracking1Destination
-
-
 
 @Destination
 @Composable
@@ -68,9 +65,8 @@ fun Dashboard(navigator: DestinationsNavigator){
             ) {
                 DailyTasks(navigator)
                 Last7days(navigator)
-                PriorityOfTheMonth()
+                PriorityOfTheWeek()
                 MoodAnalysis()
-
             }
 
         }
@@ -195,7 +191,14 @@ fun DailyTasks(
                 .padding(16.dp)
 
         ) {
-            Image(painter = painterResource(id = R.drawable.questionmark), contentDescription = "Questions")
+            Image(
+                painter = painterResource(
+                id = R.drawable.questionmark),
+                contentDescription = "Questions",
+                modifier = Modifier.clickable {
+                    navigator.navigate(QuestionsDestination)
+                }
+            )
             Text(text = "Otázky", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, fontSize = 14.sp)
 
         }
@@ -251,69 +254,6 @@ fun Last7days(
 
 
 
-}
-
-
-@Composable
-fun PriorityOfTheMonth(
-){
-    Row (
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(horizontal = 24.dp, vertical = 0.dp)
-            .fillMaxWidth()
-    )
-    {
-        Text(
-            text = "Priorita na tento mesiac",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
-        )
-    }
-    Row (
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(start = 24.dp, end = 24.dp, bottom = 24.dp, top = 8.dp)
-            .fillMaxWidth()
-            .aspectRatio(2f)
-    )
-    {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(RoundedCornerShape(20.dp))
-                .background(
-                    brush = Brush.linearGradient(
-                        0.0f to Color(0xFF0C9442),
-                        500.0f to Color(0xFF3B5307),
-                        start = Offset.Zero,
-                        end = Offset.Infinite
-                    )
-                )
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp) // Adjust the padding as needed
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.sleep),
-                    contentDescription = "Sleep"
-                )
-//                Spacer(modifier = Modifier.width(8.dp)) // Adjust the spacing between icon and text
-                Text(
-                    text = "Spánok",
-                    color = Color.White,
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-        }
-    }
 }
 
 
