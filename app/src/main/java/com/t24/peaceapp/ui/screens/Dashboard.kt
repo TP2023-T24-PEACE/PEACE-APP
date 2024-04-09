@@ -49,6 +49,9 @@ fun Dashboard(navigator: DestinationsNavigator){
         startY = 0.0f,
         endY = 1500.0f
     )
+
+
+
     Box (
         modifier = Modifier
             .fillMaxSize()
@@ -236,7 +239,8 @@ fun Last7days(
             .aspectRatio(2f)
             .clickable {
                 println("Navigating to AnalysisScreenDestination")
-                navigator.navigate(AnalysisScreenDestination)
+                println(store.getState().todos)
+//                navigator.navigate(AnalysisScreenDestination)
             }
     )
     {

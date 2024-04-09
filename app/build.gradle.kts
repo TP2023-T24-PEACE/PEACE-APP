@@ -89,5 +89,8 @@ dependencies {
     // For `compose`. Creates a `ChartStyle` based on an M3 Material Theme.
     implementation("com.patrykandpatrick.vico:compose-m3:2.0.0-alpha.14")
 
+    // ReduxKotlin - State Management
+    implementation("org.reduxkotlin:redux-kotlin-threadsafe-jvm:0.5.5")
+
 
 }
