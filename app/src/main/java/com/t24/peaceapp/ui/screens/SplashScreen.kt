@@ -27,7 +27,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.screens.destinations.IntroductionScreenDestination
+import com.t24.peaceapp.ui.destinations.IntroductionScreenDestination
 
 
 @RootNavGraph(start = true)

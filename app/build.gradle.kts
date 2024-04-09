@@ -63,7 +63,9 @@ dependencies {
 
     // Compose Destinations
     implementation("io.github.raamcosta.compose-destinations:core:1.10.0")
+    implementation("androidx.constraintlayout:constraintlayout-compose-android:1.1.0-alpha13")
     ksp("io.github.raamcosta.compose-destinations:ksp:1.10.0")
+
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -75,4 +77,13 @@ dependencies {
 
     // Splash Screen
     implementation("androidx.navigation:navigation-compose:2.7.6")
+
+    // Vico charts
+    // For `compose`. Creates a `ChartStyle` based on an M3 Material Theme.
+//    implementation("com.patrykandpatrick.vico:compose-m3:1.14.0")
+
+    // For `compose`. Creates a `ChartStyle` based on an M3 Material Theme.
+    implementation("com.patrykandpatrick.vico:compose-m3:2.0.0-alpha.14")
+
+
 }

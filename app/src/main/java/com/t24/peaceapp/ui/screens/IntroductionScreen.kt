@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
+import com.t24.peaceapp.ui.destinations.DashboardDestination
 
 
 @Destination

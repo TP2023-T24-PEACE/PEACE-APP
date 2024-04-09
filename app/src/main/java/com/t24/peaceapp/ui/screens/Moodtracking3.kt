@@ -31,8 +31,8 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.spec.Direction
 import com.t24.peaceapp.Mood
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
-import com.t24.peaceapp.ui.screens.destinations.Moodtracking2Destination
+import com.t24.peaceapp.ui.destinations.DashboardDestination
+import com.t24.peaceapp.ui.destinations.Moodtracking2Destination
 
 
 @Destination

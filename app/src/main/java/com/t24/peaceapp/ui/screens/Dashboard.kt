@@ -19,6 +19,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,10 +32,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
+import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
+import com.t24.peaceapp.ui.destinations.AnalysisScreenDestination
+import com.t24.peaceapp.ui.destinations.DashboardDestination
+import com.t24.peaceapp.ui.destinations.Moodtracking1Destination
+
 
 
 @Destination
@@ -60,9 +67,10 @@ fun Dashboard(navigator: DestinationsNavigator){
                     .verticalScroll(rememberScrollState())
             ) {
                 DailyTasks(navigator)
-                Last7days()
+                Last7days(navigator)
                 PriorityOfTheMonth()
                 MoodAnalysis()
+
             }
 
         }
@@ -199,6 +207,7 @@ fun DailyTasks(
 
 @Composable
 fun Last7days(
+    navigator: DestinationsNavigator
 ){
     Row (
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -206,6 +215,7 @@ fun Last7days(
         modifier = Modifier
             .padding(horizontal = 24.dp, vertical = 0.dp)
             .fillMaxWidth()
+
     )
     {
         Text(
@@ -221,20 +231,16 @@ fun Last7days(
             .padding(start = 24.dp, end = 24.dp, bottom = 24.dp, top = 4.dp)
             .fillMaxWidth()
             .aspectRatio(2f)
+            .clickable {
+                println("Navigating to AnalysisScreenDestination")
+                navigator.navigate(AnalysisScreenDestination)
+            }
     )
     {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .clip(RoundedCornerShape(20.dp))
-//                .background(
-//                    gradient
-//                    brush = Brush.linearGradient(
-//                        0.0f to Color(0xFF0C9442),
-//                        500.0f to Color(0xFF3B5307),
-//                        start = Offset.Zero,
-//                        end = Offset.Infinite
-//                    )
 
         ) {
             Image(painter = painterResource(id = R.drawable.mood_graph), contentDescription = "Last 7 Days Graph",

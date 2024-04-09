@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
+import com.t24.peaceapp.ui.destinations.DashboardDestination
 
 @Destination
 @Composable
