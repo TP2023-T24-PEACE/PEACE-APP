@@ -1,5 +1,8 @@
 package com.t24.peaceapp.ui.screens
 
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -41,12 +45,53 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
 import com.t24.peaceapp.ui.screens.destinations.LoginScreenDestination
+import khttp.post as khttp_post
 
+
+fun register(username : String, password : String, passwordAgain : String, navigator: DestinationsNavigator): String {
+
+    val policy = ThreadPolicy.Builder().permitAll().build()
+    StrictMode.setThreadPolicy(policy)
+
+    println("REGISTERING USER")
+    // Register user
+    if(username.isEmpty() || password.isEmpty() || passwordAgain.isEmpty()){
+        return "Všetky polia musia byť vyplnené!"
+    }
+    if(password != passwordAgain){
+        return "Heslá sa nezhodujú!"
+    }
+
+    val body = """
+        {
+            "username": "$username",
+            "password": "$password"
+        }
+    """.trimIndent()
+
+    println(body)
+
+    // Send async POST request to server
+    val response =  khttp_post("http://10.0.2.2:8000/api/v1/users", data = body)
+
+    println(response)
+
+    return if(response.statusCode != 201){
+        response.statusCode.toString()
+
+    } else {
+        // If successful, navigate to Dashboard
+        navigator.navigate(DashboardDestination)
+        "Registrácia prebehla úspešne!"
+    }
+}
 @Destination
 @Composable
 fun RegisterScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
 ) {
+
+    val context = LocalContext.current
 
     var username by remember { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -133,15 +178,20 @@ fun RegisterScreen(
                 placeholder = { Text("Heslo") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
-            Button(onClick = {
-                navigator.navigate(DashboardDestination)
-            },
+            Button(
+                onClick = {
+                    // Log output of register to console
+                    val result = register(username, password, passwordAgain, navigator)
+                    Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                    println(result)
+                },
                 contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),
                 elevation = ButtonDefaults.buttonElevation(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF5CDB5C),
-                    contentColor = Color.White),
-                ) {
+                    contentColor = Color.White
+                ),
+            ) {
                 Text("Zaregistrovať sa", fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
 
