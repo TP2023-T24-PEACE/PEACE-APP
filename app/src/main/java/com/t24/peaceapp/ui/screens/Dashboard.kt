@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -29,17 +28,14 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
-import com.t24.peaceapp.UpdateUserId
 import com.t24.peaceapp.ui.composables.PriorityOfTheWeek
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
 import com.t24.peaceapp.ui.screens.destinations.QuestionsDestination
-import com.t24.peaceapp.ui.screens.destinations.AnalysisScreenDestination
 
 @Destination
 @Composable
@@ -50,6 +46,8 @@ fun Dashboard(navigator: DestinationsNavigator){
         startY = 0.0f,
         endY = 1500.0f
     )
+
+    println(store.getState().userId)
 
 
 
@@ -240,8 +238,6 @@ fun Last7days(
             .aspectRatio(2f)
             .clickable {
                 println("Navigating to AnalysisScreenDestination")
-                println(store.getState().userId)
-                store.dispatch(UpdateUserId("XXX"))
                 println(store.getState().userId)
 //                navigator.navigate(AnalysisScreenDestination)
             }

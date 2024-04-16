@@ -1,4 +1,4 @@
-package com.t24.peaceapp
+package com.t24.peaceapp.ui.state
 
 fun todosReducer(state: List<Todo>, action: Any) =
     when (action) {

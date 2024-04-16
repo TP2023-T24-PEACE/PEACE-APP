@@ -1,9 +1,9 @@
-package com.t24.peaceapp
+package com.t24.peaceapp.ui.state
 
-import org.reduxkotlin.createThreadSafeStore
+import com.t24.peaceapp.Mood
 
 data class AppState(
-    val userId: String = "",
+    val userId: Any = "",
     val moods: List<Mood> = listOf(),
 //    val reasons: List<Reason> = listOf(),
 

@@ -46,6 +46,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
 import com.t24.peaceapp.ui.screens.destinations.LoginScreenDestination
+import com.t24.peaceapp.ui.state.UpdateUserId
 import khttp.post as khttp_post
 
 
@@ -66,7 +67,7 @@ fun register(username : String, password : String, passwordAgain : String, navig
     val name = "Test Name"
     val surname = "Test Surname"
     val sex = "male"
-    val birth_date = "2000-10-21"
+    val birthDate = "2000-10-21"
 
     val body = """
         {
@@ -75,7 +76,7 @@ fun register(username : String, password : String, passwordAgain : String, navig
             "name": "$name",
             "surname": "$surname",
             "sex": "$sex",
-            "birth_date": "$birth_date"
+            "birth_date": "$birthDate"
         }
     """.trimIndent()
 
@@ -92,7 +93,16 @@ fun register(username : String, password : String, passwordAgain : String, navig
         response.statusCode.toString()
 
     } else {
-        // If successful, navigate to Dashboard
+        // Access response text as JSON and extract "id"
+        try {
+            val id = response.text.split("\"id\":")[1].split(",")[0]
+            println("ID: $id")
+            // Update userId in state
+            store.dispatch(UpdateUserId(id))
+        } catch (e: Exception) {
+            return "Chyba pri registrácii!"
+        }
+
         navigator.navigate(DashboardDestination)
         "Registrácia prebehla úspešne!"
     }
