@@ -7,7 +7,7 @@ data class AppState(
     val moods: List<Mood> = listOf(),
 //    val reasons: List<Reason> = listOf(),
 
-    
+
 //    val todos: List<Todo> = listOf(),
 //    val visibilityFilter: VisibilityFilter = VisibilityFilter.SHOW_ALL
 ) {
