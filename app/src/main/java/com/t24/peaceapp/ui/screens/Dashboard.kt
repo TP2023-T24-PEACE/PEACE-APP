@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
+import com.t24.peaceapp.UpdateUserId
 import com.t24.peaceapp.ui.composables.PriorityOfTheWeek
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
 import com.t24.peaceapp.ui.screens.destinations.QuestionsDestination
@@ -239,7 +240,9 @@ fun Last7days(
             .aspectRatio(2f)
             .clickable {
                 println("Navigating to AnalysisScreenDestination")
-                println(store.getState().todos)
+                println(store.getState().userId)
+                store.dispatch(UpdateUserId("XXX"))
+                println(store.getState().userId)
 //                navigator.navigate(AnalysisScreenDestination)
             }
     )
