@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -62,17 +63,28 @@ fun register(username : String, password : String, passwordAgain : String, navig
         return "Heslá sa nezhodujú!"
     }
 
+    val name = "Test Name"
+    val surname = "Test Surname"
+    val sex = "male"
+    val birth_date = "2000-10-21"
+
     val body = """
         {
-            "username": "$username",
-            "password": "$password"
+            "email": "$username",
+            "password": "$password",
+            "name": "$name",
+            "surname": "$surname",
+            "sex": "$sex",
+            "birth_date": "$birth_date"
         }
     """.trimIndent()
 
     println(body)
 
     // Send async POST request to server
-    val response =  khttp_post("http://10.0.2.2:8000/api/v1/users", data = body)
+    val response =  khttp_post("http://10.0.2.2:8000/api/v1/users",
+        headers = mapOf("Content-Type" to "application/json"),
+        data = body)
 
     println(response)
 
@@ -92,7 +104,6 @@ fun RegisterScreen(
 ) {
 
     val context = LocalContext.current
-
     var username by remember { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var passwordAgain by rememberSaveable { mutableStateOf("") }
@@ -128,6 +139,7 @@ fun RegisterScreen(
             TextField(
                 value = username,
                 onValueChange = { username = it },
+                textStyle = TextStyle(color = Color.Black),
                 label = {
                     Text(
                         text ="Prihlasovacie meno",
@@ -137,6 +149,7 @@ fun RegisterScreen(
                 singleLine = true)
             TextField(
                 value = password,
+                textStyle = TextStyle(color = Color.Black),
                 onValueChange = { password = it },
                 label = {
                     Text(
@@ -168,6 +181,8 @@ fun RegisterScreen(
             TextField(
                 value = passwordAgain,
                 onValueChange = { passwordAgain = it },
+                textStyle = TextStyle(color = Color.Black),
+
                 label = {
                     Text(
                         text ="Heslo znova",
