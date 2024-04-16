@@ -70,6 +70,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose-android:1.1.0-alpha13")
     ksp("io.github.raamcosta.compose-destinations:ksp:1.10.0")
 
+    // khttp
+    dependencies {
+        implementation("io.karn:khttp-android:-SNAPSHOT")
+    }
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
