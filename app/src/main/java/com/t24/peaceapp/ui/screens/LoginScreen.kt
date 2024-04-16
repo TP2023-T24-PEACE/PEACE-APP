@@ -43,6 +43,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
+import com.t24.peaceapp.ui.screens.destinations.RegisterScreenDestination
 import khttp.post
 
 fun login(username : String, password : String, navigator: DestinationsNavigator): String {
@@ -160,7 +161,10 @@ fun LoginScreen(
                 }
             )
             Button(onClick = {
-                navigator.navigate(DashboardDestination)
+                // Log output of register to console
+                val result = login(username, password, navigator)
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                println(result)
             },
                 contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),
                 elevation = ButtonDefaults.buttonElevation(),
@@ -186,10 +190,7 @@ fun LoginScreen(
             )
             // Register button
             OutlinedButton(onClick = {
-                // Log output of register to console
-                val result = login(username, password, navigator)
-                Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
-                println(result)
+                navigator.navigate(RegisterScreenDestination)
             }
                 ,
                 contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),

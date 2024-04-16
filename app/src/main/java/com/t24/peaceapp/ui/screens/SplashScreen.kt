@@ -1,5 +1,6 @@
 package com.t24.peaceapp.ui.screens
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,61 +38,77 @@ import com.t24.peaceapp.ui.screens.destinations.LoginScreenDestination
 fun SplashScreen(
     navigator: DestinationsNavigator
 ) {
-    val loggedInUser = null
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF4C5F18), Color(0xFF2E9E6F)
-                    ),
-                    tileMode = TileMode.Repeated
-                )
-            ).padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Spacer(modifier = Modifier.weight(0.015f))
-        Image(
-            painter = painterResource(id = R.drawable.relax),
-            contentDescription = "Peace App Relax Image")
-        Spacer(modifier = Modifier.weight(0.01f))
-        Text(
-            text = "Zhlboka sa nadýchni...",
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge)
-        Spacer(modifier = Modifier.weight(0.01f))
-        Text(
-            text = "Víta ťa aplikácia",
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge)
-        Text(
-            text = "PEACE", textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge)
-        Spacer(modifier = Modifier.weight(0.01f))
-        Button(
-            contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),
-            elevation = ButtonDefaults.buttonElevation(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF5CDB5C),
-                contentColor = Color.White),
-            onClick = {
-                if(loggedInUser == null) {
-                    navigator.navigate(LoginScreenDestination)
-                } else {
-                    navigator.navigate(DashboardDestination)
-                }
 
-            }) {
+    val context = MainActivity.context
+
+    val sharedPref = context.getSharedPreferences("userId", Context.MODE_PRIVATE)
+    val loggedInUserId = sharedPref.getString("userId", "")
+    println("userId from sharedPref / SplashScreen: $loggedInUserId")
+    if(loggedInUserId != null && loggedInUserId != "") {
+        navigator.navigate(DashboardDestination)
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFF4C5F18), Color(0xFF2E9E6F)
+                        ),
+                        tileMode = TileMode.Repeated
+                    )
+                ).padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(modifier = Modifier.weight(0.015f))
+            Image(
+                painter = painterResource(id = R.drawable.relax),
+                contentDescription = "Peace App Relax Image"
+            )
+            Spacer(modifier = Modifier.weight(0.01f))
             Text(
-                fontSize = 24.sp,
-                fontWeight = FontWeight.ExtraBold,
-                text = "POKRAČOVAŤ",
-                color = Color.White)
+                text = "Zhlboka sa nadýchni...",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge
+            )
+            Spacer(modifier = Modifier.weight(0.01f))
+            Text(
+                text = "Víta ťa aplikácia",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(
+                text = "PEACE", textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge
+            )
+            Spacer(modifier = Modifier.weight(0.01f))
+            Button(
+                contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),
+                elevation = ButtonDefaults.buttonElevation(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF5CDB5C),
+                    contentColor = Color.White
+                ),
+                onClick = {
+                    println("userId: $loggedInUserId")
+                    if (loggedInUserId == null || loggedInUserId == "") {
+                        navigator.navigate(LoginScreenDestination)
+                    } else {
+                        navigator.navigate(DashboardDestination)
+                    }
+
+                }) {
+                Text(
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    text = "POKRAČOVAŤ",
+                    color = Color.White
+                )
+            }
+            Spacer(
+                modifier = Modifier.weight(0.01f)
+            )
         }
-        Spacer(
-            modifier = Modifier.weight(0.01f)
-        )
     }
 }
