@@ -1,5 +1,7 @@
 package com.t24.peaceapp.ui.screens
 
+import android.os.StrictMode
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,14 +43,51 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
-import com.t24.peaceapp.ui.screens.destinations.RegisterScreenDestination
+import khttp.post
+
+fun login(username : String, password : String, navigator: DestinationsNavigator): String {
+
+    val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+    StrictMode.setThreadPolicy(policy)
+
+    println("LOGING IN USER")
+    // Register user
+    if(username.isEmpty() || password.isEmpty()){
+        return "Všetky polia musia byť vyplnené!"
+    }
+
+    val body = """
+        {
+            "email": "$username",
+            "password": "$password",
+        }
+    """.trimIndent()
+
+    println(body)
+
+    // Send async POST request to server
+    val response =  post("http://10.0.2.2:8000/api/v1/users",
+        headers = mapOf("Content-Type" to "application/json"),
+        data = body)
+
+    println(response)
+
+    return if(response.statusCode != 201){
+        response.statusCode.toString()
+
+    } else {
+        // If successful, navigate to Dashboard
+        navigator.navigate(DashboardDestination)
+        "Prihlásenie prebehlo úspešne!"
+    }
+}
 
 @Destination
 @Composable
 fun LoginScreen(
     navigator: DestinationsNavigator
 ) {
-
+    val context = LocalContext.current
     var username by remember { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
@@ -146,8 +186,12 @@ fun LoginScreen(
             )
             // Register button
             OutlinedButton(onClick = {
-                navigator.navigate(RegisterScreenDestination)
-            },
+                // Log output of register to console
+                val result = login(username, password, navigator)
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                println(result)
+            }
+                ,
                 contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),
                 elevation = ButtonDefaults.buttonElevation(),
                 colors = ButtonDefaults.buttonColors(
