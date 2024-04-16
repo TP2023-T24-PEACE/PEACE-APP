@@ -8,8 +8,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.ramcosta.composedestinations.DestinationsNavHost
-import com.t24.peaceapp.ui.NavGraphs
+import com.t24.peaceapp.AppState
+import com.t24.peaceapp.rootReducer
+//import com.t24.peaceapp.ui.NavGraphs
 import com.t24.peaceapp.ui.theme.PEACEAPPTheme
+import org.reduxkotlin.createThreadSafeStore
+
+
+val store = createThreadSafeStore(::rootReducer, AppState())
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

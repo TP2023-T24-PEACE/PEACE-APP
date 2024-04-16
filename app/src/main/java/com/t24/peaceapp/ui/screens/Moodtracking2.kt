@@ -14,8 +14,8 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.Mood
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.destinations.Moodtracking1Destination
-import com.t24.peaceapp.ui.destinations.Moodtracking3Destination
+import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
+import com.t24.peaceapp.ui.screens.destinations.Moodtracking3Destination
 
 @Destination
 @Composable

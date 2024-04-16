@@ -38,8 +38,6 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class AnalysisScreen {
-}
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Destination
