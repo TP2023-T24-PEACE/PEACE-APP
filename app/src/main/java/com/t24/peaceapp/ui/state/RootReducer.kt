@@ -7,5 +7,6 @@ fun rootReducer(state: AppState, action: Any) = AppState(
 
     userId = userIdReducer(state.userId, action),
     token = tokenReducer(state.token, action),
-    data = moodReducer(state.data, action)
+    value = sliderReducer(state.value, action),
+    moods = moodsReducer(state.moods, action),
 )

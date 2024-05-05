@@ -1,16 +1,23 @@
 package com.t24.peaceapp.ui.screens
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -21,18 +28,33 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking2Destination
-//import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
-//import com.t24.peaceapp.ui.screens.destinations.Moodtracking2Destination
+import com.t24.peaceapp.ui.state.UpdateSlider
+import com.t24.peaceapp.ui.state.context
+
+fun saveSliderPosition(sliderPosition: Float, navigator: DestinationsNavigator) {
+    println("Mood state saved: $sliderPosition")
+
+    val sharedPref = context.getSharedPreferences("userId", Context.MODE_PRIVATE)
+    val loggedInUserId = sharedPref.getString("userId", "")?.replace("\"", "")?.replace(" ", "")
+    println("userId from sharedPref / Moodtracking1: $loggedInUserId")
+
+    store.dispatch(UpdateSlider(sliderPosition))
+
+    navigator.navigate(Moodtracking2Destination)
+}
 
 @Destination
 @Composable
@@ -53,24 +75,60 @@ fun Moodtracking1 (
     ){
         Column {
             StepIndicator(currentStep = 1, totalSteps = 3)
-            MoodSlider(sliderPosition)
-
+            MoodSlider(onValueChanged = { sliderPosition = it }, sliderPosition = sliderPosition)
         }
-        BottomMenu(
-            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),
-            navigator,
-            DashboardDestination,
-            Moodtracking2Destination)
+        Row (
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding( 15.dp)
+                .align(Alignment.BottomCenter).fillMaxWidth()
 
+        ) {
 
+            Image(
+                painter = painterResource(id = R.drawable.arrow_left),
+                contentDescription = "Back Button",
+                modifier = Modifier.clickable {
+                    navigator.navigate(DashboardDestination)
+                }
+            )
+
+            Box(modifier = Modifier
+                .padding(10.dp)
+//            .width(250.dp)
+                .clip(RoundedCornerShape(50.dp))
+                .background(Color(0xFF5CDB5C))
+                .padding(horizontal = 30.dp, vertical = 12.dp)
+
+            ){
+                Button(
+                    contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),
+                    elevation = ButtonDefaults.buttonElevation(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF5CDB5C),
+                        contentColor = Color.White),
+                    onClick = {
+                        saveSliderPosition(sliderPosition, navigator)
+                    }) {
+                    Text(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        text = "POKRAČOVAŤ",
+                        color = Color.White)
+                    Spacer(
+                        modifier = Modifier.weight(0.01f)
+                    )
+                }
+            }
+        }
     }
-
 }
 
 
 
 @Composable
-fun MoodSlider(sliderPosition: Float){
+fun MoodSlider(sliderPosition: Float, onValueChanged: (Float) -> Unit) {
     var sliderPosition by remember { mutableFloatStateOf(sliderPosition) }
 
     val moodImages = listOf(
@@ -138,7 +196,10 @@ fun MoodSlider(sliderPosition: Float){
 
                     Slider(
                         value = sliderPosition,
-                        onValueChange = { sliderPosition = it }
+                        onValueChange = {
+                            sliderPosition = it
+                            onValueChanged(it)
+                        },
                     )
                     Text(text = sliderPosition.toString(), modifier = Modifier.padding(top = 35.dp))
                 }

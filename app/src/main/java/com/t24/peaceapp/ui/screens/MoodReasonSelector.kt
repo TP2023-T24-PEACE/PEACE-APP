@@ -14,11 +14,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.t24.peaceapp.Mood
+import com.t24.peaceapp.ui.state.UpdateMoods
+
+
+fun updateMoods(moods: List<Mood>) {
+
+    // For each mood, only filter title and selected, also only keep selected moods
+
+
+    // Create empty list that takes any list
+    val moodsFiltered = mutableListOf<Any>()
+
+    for (mood in moods) {
+        if(mood.selected){
+            moodsFiltered.add(mood.title)
+        }
+    }
+
+    println("moodsFiltered: $moodsFiltered")
+
+    store.dispatch(UpdateMoods(moodsFiltered))
+}
 
 @Composable
 fun MoodReasonSelector(moods: List<Mood>,
-                       title: String
+                       title: String,
 ){
+
+    var moods = moods
 
     Column (modifier = Modifier
         .fillMaxWidth()
@@ -40,8 +63,21 @@ fun MoodReasonSelector(moods: List<Mood>,
             modifier = Modifier.fillMaxHeight())
         {
             items(moods.size){
+
                 MoodReason(
-                    mood = moods[it]
+                    mood = moods[it],
+                    onValueChanged = { mood ->
+                        moods = moods.mapIndexed { index, moodItem ->
+                            if (index == it) {
+                                val moodLocal = moodItem.copy(selected = mood);
+                                moodLocal
+                            } else {
+                                moodItem
+                            }
+
+                        }
+                        updateMoods(moods)
+                    }
                 )
             }
         }
