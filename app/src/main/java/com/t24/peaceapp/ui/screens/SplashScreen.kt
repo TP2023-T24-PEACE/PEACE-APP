@@ -43,7 +43,10 @@ fun SplashScreen(
 
     val sharedPref = context.getSharedPreferences("userId", Context.MODE_PRIVATE)
     val loggedInUserId = sharedPref.getString("userId", "")
+    val sharedPrefToken = context.getSharedPreferences("token", Context.MODE_PRIVATE)
+    val loggedInUserToken = sharedPrefToken.getString("token", "")
     println("userId from sharedPref / SplashScreen: $loggedInUserId")
+    println("token from sharedPref / SplashScreen: $loggedInUserToken")
     if(loggedInUserId != null && loggedInUserId != "") {
         navigator.navigate(DashboardDestination)
     } else {

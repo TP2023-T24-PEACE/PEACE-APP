@@ -6,5 +6,8 @@ fun rootReducer(state: AppState, action: Any) = AppState(
 //    visibilityFilter = visibilityFilterReducer(state.visibilityFilter, action)
 
     userId = userIdReducer(state.userId, action),
-//    moods = moodsReducer(state.moods, action)
+    token = tokenReducer(state.token, action),
+    value = sliderReducer(state.value, action),
+    moods = moodsReducer(state.moods, action),
+    reasons = reasonsReducer(state.reasons, action)
 )

@@ -34,8 +34,10 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.composables.PriorityOfTheWeek
+import com.t24.peaceapp.ui.screens.destinations.LoginScreenDestination
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
 import com.t24.peaceapp.ui.screens.destinations.QuestionsDestination
+import com.t24.peaceapp.ui.state.UpdateUserId
 
 @Destination
 @Composable
@@ -69,8 +71,29 @@ fun Dashboard(navigator: DestinationsNavigator){
                 Last7days(navigator)
                 PriorityOfTheWeek()
                 MoodAnalysis()
+                // Logout button
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(Color(0xFF314700))
+                        .clickable {
+                            println("Logging out")
+                            store.dispatch(UpdateUserId(""))
+                            navigator.navigate(LoginScreenDestination)
+                        }
+                ) {
+                    Text(
+                        text = "Odhlásiť sa",
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
             }
-
         }
     }
 

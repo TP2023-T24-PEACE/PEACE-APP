@@ -1,5 +1,8 @@
 package com.t24.peaceapp.ui.screens
 
+import android.content.Context
+import android.os.StrictMode
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,9 +35,86 @@ import com.ramcosta.composedestinations.spec.Direction
 import com.t24.peaceapp.Mood
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
+import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking2Destination
+import com.t24.peaceapp.ui.state.UpdateUserToken
+import com.t24.peaceapp.ui.state.context
+import khttp.post
+
+fun post_entry(navigator: DestinationsNavigator): String {
+    // TODO POST entry to server
+
+    val sharedPref = context.getSharedPreferences("userId", Context.MODE_PRIVATE)
+    val loggedInUserId = sharedPref.getString("userId", "")
+    val sharedPrefToken = context.getSharedPreferences("token", Context.MODE_PRIVATE)
+    val token = sharedPrefToken.getString("token", "")
+    val overallMood = store.state.value
+    val moods = store.state.moods
+    val reasons = store.state.reasons
+
+    println("user_id: $loggedInUserId")
+    println("overall_mood: $overallMood")
+    println("moods: $moods")
+    println("reasons: $reasons")
+
+    val authorization = "Bearer"+ (token?.replace("\"", "") ?: "")
+
+    val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+    StrictMode.setThreadPolicy(policy)
+
+    // format list mood into key value pairs
+    var moodList = ""
+    for (i in 0 until moods.size){
+        if(i == moods.size - 1){
+            moodList += "\"${moods[i]}\": 1"
+        } else {
+            moodList += "\"${moods[i]}\": 1,"
+        }
+    }
+
+    var reasonList = ""
+    for (i in 0 until reasons.size){
+        if(i == reasons.size - 1){
+            reasonList += "\"${reasons[i]}\": \"True\""
+        } else {
+            reasonList += "\"${reasons[i]}\": \"True\","
+        }
+    }
+
+    val body = """
+        {
+            "type": "daily_entry",
+            "user_id":$loggedInUserId,
+            "overall_mood": $overallMood,
+            "moods": {$moodList},
+            "reasons": {$reasonList}
+        }
+    """.trimIndent()
+
+    println(body)
+
+    // Send async POST request to server
+    val headers = mapOf(
+        "Content-Type" to "application/json",
+        "X-Apikey" to "3a2455ba-9d37-467d-bff0-d5a830526066",
+        "Authorization" to authorization
+
+    )
+    val response =  post("http://10.0.2.2:8000/api/v1/entries",
+        headers = headers,
+        data = body)
 
 
+    println(response)
+
+    return if(response.statusCode == 201){
+         navigator.navigate(DashboardDestination)
+        "Záznam bol úspešne uložený!"
+    } else {
+         navigator.navigate(DashboardDestination)
+        "Nastala chyba pri ukladaní záznamu!"
+    }
+}
 @Destination
 @Composable
 fun Moodtracking3(
@@ -165,11 +245,56 @@ fun Moodtracking3(
                     moodValue = 4,
                     selected = false
                 ),
-            ),
-                "Prečo sa takto cítiš?"
+            ),"Prečo sa takto cítiš?","reasons"
             )
         }
-        BottomMenu(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(), navigator, Moodtracking2Destination, DashboardDestination)
+        Row (
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding( 15.dp)
+                .align(Alignment.BottomCenter).fillMaxWidth()
+
+        ) {
+
+            Image(
+                painter = painterResource(id = R.drawable.arrow_left),
+                contentDescription = "Back Button",
+                modifier = Modifier.clickable {
+                    navigator.navigate(Moodtracking2Destination)
+                }
+            )
+
+            Box(modifier = Modifier
+                .padding(10.dp)
+//            .width(250.dp)
+                .clip(RoundedCornerShape(50.dp))
+                .background(Color(0xFF5CDB5C))
+                .padding(horizontal = 30.dp, vertical = 12.dp)
+
+            ){
+                Button(
+                    contentPadding = PaddingValues(32.dp, 8.dp, 32.dp, 8.dp),
+                    elevation = ButtonDefaults.buttonElevation(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF5CDB5C),
+                        contentColor = Color.White),
+                    onClick = {
+                        val result = post_entry(navigator)
+                        Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                        println(result)
+                    }) {
+                    Text(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        text = "POKRAČOVAŤ",
+                        color = Color.White)
+                    Spacer(
+                        modifier = Modifier.weight(0.01f)
+                    )
+                }
+            }
+        }
     }
 
 }

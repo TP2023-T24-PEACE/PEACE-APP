@@ -28,7 +28,8 @@ import com.t24.peaceapp.Mood
 
 @Composable
 fun MoodReason(
-    mood: Mood
+    mood: Mood,
+    onValueChanged: (Boolean) -> Unit
 ) {
 
     var isSelected by remember { mutableStateOf(false) }
@@ -43,7 +44,8 @@ fun MoodReason(
             )
             .padding(15.dp)
             .clickable {
-                isSelected = !isSelected
+                isSelected = !isSelected;
+                onValueChanged(isSelected)
             }
             .aspectRatio(1f)
     ) {
