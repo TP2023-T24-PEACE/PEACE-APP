@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -44,7 +45,42 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
 import com.t24.peaceapp.ui.screens.destinations.RegisterScreenDestination
-import khttp.post
+import com.t24.peaceapp.ui.state.UpdateUserId
+import com.t24.peaceapp.ui.state.UpdateUserToken
+import khttp.get as khttp_get
+import khttp.post as khttp_post
+
+fun getUserId(token: String): String {
+    val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+    StrictMode.setThreadPolicy(policy)
+
+    println("GETTING USER ID")
+    // remove quotes from token
+    val authorization = "Bearer"+token.replace("\"", "")
+    // Register user
+    val headers = mapOf(
+        "Content-Type" to "application/json",
+        "X-Apikey" to "3a2455ba-9d37-467d-bff0-d5a830526066",
+        "Authorization" to authorization
+    )
+    val response =  khttp_get("http://10.0.2.2:8000/api/v1/user-me",
+        headers = headers)
+    println("header before user-me")
+    println(headers)
+    println(response)
+
+    return if(response.statusCode == 200){
+        response.statusCode.toString()
+        val userId = response.text.split("\"id\":")[1].split(",")[0]
+        println("userId: $userId")
+        // Update userId in state
+        store.dispatch(UpdateUserId(userId))
+        userId
+    } else {
+        // If successful, navigate to Dashboard
+        "Nesprávne prihlasovacie údaje!"
+    }
+}
 
 fun login(username : String, password : String, navigator: DestinationsNavigator): String {
 
@@ -60,26 +96,38 @@ fun login(username : String, password : String, navigator: DestinationsNavigator
     val body = """
         {
             "email": "$username",
-            "password": "$password",
+            "password": "$password"
         }
     """.trimIndent()
 
     println(body)
 
     // Send async POST request to server
-    val response =  post("http://10.0.2.2:8000/api/v1/users",
-        headers = mapOf("Content-Type" to "application/json"),
+    val headers = mapOf(
+        "Content-Type" to "application/json",
+        "X-Apikey" to "3a2455ba-9d37-467d-bff0-d5a830526066"
+    )
+    val response =  khttp_post("http://10.0.2.2:8000/api/v1/auth",
+        headers = headers,
         data = body)
+
 
     println(response)
 
-    return if(response.statusCode != 201){
+    return if(response.statusCode == 200){
         response.statusCode.toString()
+        val token = response.text.split("\"token\":")[1].split(",")[0]
+        println("token: $token")
+        // Update userId in state
+        store.dispatch(UpdateUserToken(token))
+        navigator.navigate(DashboardDestination)
+        "Prihlásenie prebehlo úspešne!"
+
+        getUserId(token)
 
     } else {
         // If successful, navigate to Dashboard
-        navigator.navigate(DashboardDestination)
-        "Prihlásenie prebehlo úspešne!"
+        "Nesprávne prihlasovacie údaje!"
     }
 }
 
@@ -123,6 +171,7 @@ fun LoginScreen(
             TextField(
                 value = username,
                 onValueChange = { username = it },
+                textStyle = TextStyle(color = Color.Black),
                 label = {
                     Text(
                         text ="Prihlasovacie meno",
@@ -133,6 +182,7 @@ fun LoginScreen(
             TextField(
                 value = password,
                 onValueChange = { password = it },
+                textStyle = TextStyle(color = Color.Black),
                 label = {
                     Text(
                         text ="Heslo",
@@ -140,7 +190,6 @@ fun LoginScreen(
                         color = Color.Black
                     ) },
                 singleLine = true,
-                placeholder = { Text("Password") },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 trailingIcon = {

@@ -39,7 +39,7 @@ import com.t24.peaceapp.ui.screens.destinations.Moodtracking2Destination
 fun Moodtracking1 (
     navigator: DestinationsNavigator
 ) {
-
+    var sliderPosition by remember { mutableFloatStateOf(0.5f) }
     val gradient = Brush.verticalGradient(
         0.0f to Color(0xBF4C5F18),
         1.0f to Color(0xBF2E9E6F),
@@ -53,10 +53,14 @@ fun Moodtracking1 (
     ){
         Column {
             StepIndicator(currentStep = 1, totalSteps = 3)
-            MoodSlider()
+            MoodSlider(sliderPosition)
 
         }
-        BottomMenu(modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(), navigator, DashboardDestination, Moodtracking2Destination)
+        BottomMenu(
+            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),
+            navigator,
+            DashboardDestination,
+            Moodtracking2Destination)
 
 
     }
@@ -66,8 +70,8 @@ fun Moodtracking1 (
 
 
 @Composable
-fun MoodSlider(){
-    var sliderPosition by remember { mutableFloatStateOf(0f) }
+fun MoodSlider(sliderPosition: Float){
+    var sliderPosition by remember { mutableFloatStateOf(sliderPosition) }
 
     val moodImages = listOf(
         R.drawable.green_excited,

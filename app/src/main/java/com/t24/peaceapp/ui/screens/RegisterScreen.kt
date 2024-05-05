@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
 import com.t24.peaceapp.ui.screens.destinations.LoginScreenDestination
 import com.t24.peaceapp.ui.state.UpdateUserId
 import khttp.post as khttp_post
@@ -83,8 +82,12 @@ fun register(username : String, password : String, passwordAgain : String, navig
     println(body)
 
     // Send async POST request to server
+    val headers = mapOf(
+        "Content-Type" to "application/json",
+        "X-Apikey" to "3a2455ba-9d37-467d-bff0-d5a830526066"
+    )
     val response =  khttp_post("http://10.0.2.2:8000/api/v1/users",
-        headers = mapOf("Content-Type" to "application/json"),
+        headers = headers,
         data = body)
 
     println(response)
@@ -93,17 +96,7 @@ fun register(username : String, password : String, passwordAgain : String, navig
         response.statusCode.toString()
 
     } else {
-        // Access response text as JSON and extract "id"
-        try {
-            val id = response.text.split("\"id\":")[1].split(",")[0]
-            println("ID: $id")
-            // Update userId in state
-            store.dispatch(UpdateUserId(id))
-        } catch (e: Exception) {
-            return "Chyba pri registrácii!"
-        }
-
-        navigator.navigate(DashboardDestination)
+        navigator.navigate(LoginScreenDestination)
         "Registrácia prebehla úspešne!"
     }
 }
@@ -168,7 +161,6 @@ fun RegisterScreen(
                         color = Color.Black
                     ) },
                 singleLine = true,
-                placeholder = { Text("Password") },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 trailingIcon = {
@@ -200,8 +192,7 @@ fun RegisterScreen(
                         color = Color.Black
                     ) },
                 singleLine = true,
-                placeholder = { Text("Heslo") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             )
             Button(
                 onClick = {

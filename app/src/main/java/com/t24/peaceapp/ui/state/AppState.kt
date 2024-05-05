@@ -4,7 +4,8 @@ import com.t24.peaceapp.Mood
 
 data class AppState(
     val userId: Any = "",
-    val moods: List<Mood> = listOf(),
+    val token: Any = "",
+    val data: Any = ""
 //    val reasons: List<Reason> = listOf(),
 
 
