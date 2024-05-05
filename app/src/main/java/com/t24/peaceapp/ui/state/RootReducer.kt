@@ -9,4 +9,5 @@ fun rootReducer(state: AppState, action: Any) = AppState(
     token = tokenReducer(state.token, action),
     value = sliderReducer(state.value, action),
     moods = moodsReducer(state.moods, action),
+    reasons = reasonsReducer(state.reasons, action)
 )

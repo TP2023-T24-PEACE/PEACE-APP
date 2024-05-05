@@ -9,5 +9,5 @@ data class UpdateSlider(val value: Float)
 data class UpdateMoods(val moods: MutableList<Any>)
 
 
-data class UpdateReasons(val reasons: List<Mood>)
+data class UpdateReasons(val reasons: MutableList<Any>)
 

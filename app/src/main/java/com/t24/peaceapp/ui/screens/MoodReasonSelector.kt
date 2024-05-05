@@ -15,30 +15,37 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.t24.peaceapp.Mood
 import com.t24.peaceapp.ui.state.UpdateMoods
+import com.t24.peaceapp.ui.state.UpdateReasons
 
 
 fun updateMoods(moods: List<Mood>) {
-
-    // For each mood, only filter title and selected, also only keep selected moods
-
-
     // Create empty list that takes any list
     val moodsFiltered = mutableListOf<Any>()
-
     for (mood in moods) {
         if(mood.selected){
             moodsFiltered.add(mood.title)
         }
     }
-
     println("moodsFiltered: $moodsFiltered")
-
     store.dispatch(UpdateMoods(moodsFiltered))
+}
+
+fun updateReasons(moods: List<Mood>) {
+    // Create empty list that takes any list
+    val reasonsFiltered = mutableListOf<Any>()
+    for (reason in moods) {
+        if(reason.selected){
+            reasonsFiltered.add(reason.title)
+        }
+    }
+    println("reasonsFiltered: $reasonsFiltered")
+    store.dispatch(UpdateReasons(reasonsFiltered))
 }
 
 @Composable
 fun MoodReasonSelector(moods: List<Mood>,
                        title: String,
+                       type: String
 ){
 
     var moods = moods
@@ -66,17 +73,30 @@ fun MoodReasonSelector(moods: List<Mood>,
 
                 MoodReason(
                     mood = moods[it],
-                    onValueChanged = { mood ->
-                        moods = moods.mapIndexed { index, moodItem ->
-                            if (index == it) {
-                                val moodLocal = moodItem.copy(selected = mood);
-                                moodLocal
-                            } else {
-                                moodItem
+                    onValueChanged = {
+                        mood ->
+                        if(type == "moods"){
+                            moods = moods.mapIndexed { index, moodItem ->
+                                if (index == it) {
+                                    val moodLocal = moodItem.copy(selected = mood);
+                                    moodLocal
+                                } else {
+                                    moodItem
+                                }
                             }
+                            updateMoods(moods)
+                        } else if (type == "reasons") {
+                            moods = moods.mapIndexed { index, moodItem ->
+                                if (index == it) {
+                                    val moodLocal = moodItem.copy(selected = mood);
+                                    moodLocal
+                                } else {
+                                    moodItem
+                                }
 
+                            }
+                            updateReasons(moods)
                         }
-                        updateMoods(moods)
                     }
                 )
             }

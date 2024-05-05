@@ -165,9 +165,7 @@ fun Moodtracking2(
                     moodValue = 4,
                     selected = false
                 )
-            ),
-                "Pomôž nám lepšie pochopiť tvoju náladu"
-
+            ),"Pomôž nám lepšie pochopiť tvoju náladu","moods"
             )
         }
         Row (
@@ -202,7 +200,7 @@ fun Moodtracking2(
                         containerColor = Color(0xFF5CDB5C),
                         contentColor = Color.White),
                     onClick = {
-
+                        navigator.navigate(Moodtracking3Destination)
                     }) {
                     Text(
                         fontSize = 20.sp,
