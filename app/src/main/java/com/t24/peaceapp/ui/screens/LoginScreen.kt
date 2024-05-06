@@ -60,10 +60,10 @@ fun getUserId(token: String): String {
     // Register user
     val headers = mapOf(
         "Content-Type" to "application/json",
-        "X-Apikey" to "3a2455ba-9d37-467d-bff0-d5a830526066",
+        "X-Apikey" to "30fa4be8-f8bb-4131-80bb-eda62eb9d116",
         "Authorization" to authorization
     )
-    val response =  khttp_get("http://10.0.2.2:8000/api/v1/user-me",
+    val response =  khttp_get("https://tp-be-production.up.railway.app/api/v1/user-me",
         headers = headers)
     println("header before user-me")
     println(headers)
@@ -105,9 +105,9 @@ fun login(username : String, password : String, navigator: DestinationsNavigator
     // Send async POST request to server
     val headers = mapOf(
         "Content-Type" to "application/json",
-        "X-Apikey" to "3a2455ba-9d37-467d-bff0-d5a830526066"
+        "X-Apikey" to "30fa4be8-f8bb-4131-80bb-eda62eb9d116",
     )
-    val response =  khttp_post("http://10.0.2.2:8000/api/v1/auth",
+    val response =  khttp_post("https://tp-be-production.up.railway.app/api/v1/auth",
         headers = headers,
         data = body)
 
