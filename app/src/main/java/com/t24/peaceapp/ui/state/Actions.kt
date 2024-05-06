@@ -2,6 +2,8 @@ package com.t24.peaceapp.ui.state
 
 data class UpdateUserId(val userId: String)
 data class UpdateUserEmail(val email: String)
+data class UpdateUserXP(val xp: Int)
+data class UpdateUserLevel(val level: Int)
 data class UpdateUserToken(val token: String)
 
 data class UpdateSlider(val value: Float)

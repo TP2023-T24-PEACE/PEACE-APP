@@ -3,6 +3,7 @@ package com.t24.peaceapp.ui.screens
 
 import android.content.Context
 import android.os.StrictMode
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -27,10 +29,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.annotation.Destination
@@ -43,6 +49,8 @@ import com.t24.peaceapp.ui.screens.destinations.QuestionsDestination
 import com.t24.peaceapp.ui.state.UpdateQuestions
 import com.t24.peaceapp.ui.state.UpdateUserId
 import com.t24.peaceapp.ui.state.UpdateUserEmail
+import com.t24.peaceapp.ui.state.UpdateUserLevel
+import com.t24.peaceapp.ui.state.UpdateUserXP
 import com.t24.peaceapp.ui.state.context
 import khttp.get
 
@@ -69,10 +77,16 @@ fun getUserId(token: String) {
         response.statusCode.toString()
         val userId = response.text.split("\"id\":")[1].split(",")[0]
         val email = response.text.split("\"email\":")[1].split(",")[0]
+        val xp = response.text.split("\"xp\":")[1].split(",")[0].replace(" ", "")
+        val level = response.text.split("\"level\":")[1].split(",")[0].replace(" ", "")
         println("userId: $userId")
         println("email: $email")
+        println("xp: $xp")
+        println("level: $level")
         store.dispatch(UpdateUserId(userId))
         store.dispatch(UpdateUserEmail(email))
+        store.dispatch(UpdateUserXP(xp.toInt()))
+        store.dispatch(UpdateUserLevel(level.toInt() + 1))
         userId
     }
 }
@@ -202,14 +216,20 @@ fun Dashboard(navigator: DestinationsNavigator){
 
 
 @Composable
-fun InfoPanel(){
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(bottom = 16.dp)
-        .shadow(16.dp)
-        .clip(shape = RoundedCornerShape(0.dp, 0.dp, 16.dp, 16.dp))
-        .background(Color(0xFF314700))
-        .padding(horizontal = 24.dp, vertical = 12.dp)
+fun InfoPanel() {
+    val xp = store.state.xp.toString().toInt()
+    val level = store.state.level.toString().toInt()
+    val xp_current = (xp - ((level-1)*100)).toFloat()/100.toFloat()
+    println("XP current: $xp_current")
+
+        Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp)
+            .shadow(16.dp)
+            .clip(shape = RoundedCornerShape(0.dp, 0.dp, 16.dp, 16.dp))
+            .background(Color(0xFF314700))
+            .padding(horizontal = 24.dp, vertical = 12.dp)
 
     ) {
         Row(
@@ -218,21 +238,84 @@ fun InfoPanel(){
             modifier = Modifier.fillMaxWidth()
         ) {
 
-            Column {
-                Text(text = "2", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
-
+            Row {
+                PreviewProgressBar(xp_current.toFloat(), Color(0xFF4DB6AC), Color(0xFF90A4AE), 4.dp)
+                Text(
+                    text = "$level",
+                    modifier = Modifier.offset(x = -27.dp, y =3.dp),
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold
+                )
             }
             Column {
-                Text(text = "Domov", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+                Text(
+                    text = "Domov",
+                    modifier = Modifier.offset(x = -24.dp),
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold
+                )
             }
 
             Column {
 
             }
-        }    }
+        }
+    }
 }
 
+@Composable
+fun ComposeCircularProgressBar(
+    modifier: Modifier = Modifier,
+    percentage: Float,
+    fillColor: Color,
+    backgroundColor: Color,
+    strokeWidth: Dp
+) {
+    Canvas(
+        modifier = modifier
+            .size(40.dp)
+    ) {
+        // Background Line
+        drawArc(
+            color = backgroundColor,
+            140f,
+            260f,
+            false,
+            style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round),
+            size = Size(size.width, size.height)
+        )
 
+        drawArc(
+            color = fillColor,
+            140f,
+            percentage * 260f,
+            false,
+            style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round),
+            size = Size(size.width, size.height)
+        )
+
+
+        var angleInDegrees = (percentage * 260.0) + 50.0
+        var radius = (size.height / 2)
+        var x = -(radius * Math.sin(Math.toRadians(angleInDegrees))).toFloat() + (size.width / 2)
+        var y = (radius * Math.cos(Math.toRadians(angleInDegrees))).toFloat() + (size.height / 2)
+
+        drawCircle(
+            color = Color.White,
+            radius = 5f,
+            center = Offset(x,  y)
+        )
+    }
+}
+@Composable
+fun PreviewProgressBar(percentage: Float, fillColor: Color, backgroundColor: Color, strokeWidth: Dp) {
+    ComposeCircularProgressBar(
+        percentage = percentage,
+        fillColor = fillColor,
+        backgroundColor = backgroundColor,
+        strokeWidth = strokeWidth
+    )
+}
 
 @Composable
 fun DailyTasks(
