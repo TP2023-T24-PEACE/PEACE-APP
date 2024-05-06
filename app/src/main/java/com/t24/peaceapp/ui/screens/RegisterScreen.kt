@@ -84,9 +84,9 @@ fun register(username : String, password : String, passwordAgain : String, navig
     // Send async POST request to server
     val headers = mapOf(
         "Content-Type" to "application/json",
-        "X-Apikey" to "3a2455ba-9d37-467d-bff0-d5a830526066"
+        "X-Apikey" to "30fa4be8-f8bb-4131-80bb-eda62eb9d116"
     )
-    val response =  khttp_post("http://10.0.2.2:8000/api/v1/users",
+    val response =  khttp_post("https://tp-be-production.up.railway.app/api/v1/users",
         headers = headers,
         data = body)
 

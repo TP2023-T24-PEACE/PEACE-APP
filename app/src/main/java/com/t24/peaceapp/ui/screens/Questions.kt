@@ -32,14 +32,18 @@ import com.alexstyl.swipeablecard.swipableCard
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
+import com.t24.peaceapp.ui.state.UpdateAnswers
+
 
 @OptIn(ExperimentalSwipeableCardApi::class)
 @Destination
 @Composable
+
+
 fun Questions (
     navigator: DestinationsNavigator
 ) {
-
+    var questions = store.state.questions
     val gradient = Brush.verticalGradient(
         0.0f to Color(0xBF4C5F18),
         1.0f to Color(0xBF2E9E6F),
@@ -66,13 +70,6 @@ fun Questions (
             val state4 = rememberSwipeableCardState()
             val state5 = rememberSwipeableCardState()
 
-            val questions = listOf(
-                "1 How are you feeling today?",
-                "2 How are you feeling today?",
-                "3 How are you feeling today?",
-                "4 How are you feeling today?",
-                "5 How are you feeling today?",
-            )
             // stack of 5 questions on top of each other
 
             Box(
@@ -82,8 +79,15 @@ fun Questions (
                     .fillMaxSize()
                     .swipableCard(
                         state = state1,
-                        onSwiped = {
-                            currentStep++
+                        onSwiped = { it ->
+                            currentStep++;
+                            // prinln direction of swipe
+                            println("swiped: $it");
+                            // if swiped to the right, add "True" to the answerList
+                            val question = questions[0]
+                            val answer = Pair(question, it.toString() == "Right")
+                            println("answerList: $answer");
+                            store.dispatch(UpdateAnswers(answer))
                         }
                     )
             ) {
@@ -102,8 +106,8 @@ fun Questions (
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = questions[0],
-                        style = MaterialTheme.typography.titleMedium,
+                        text = questions[0].toString(),
+                        style = MaterialTheme.typography.titleSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().align(Alignment.Center),
                         color = MaterialTheme.colorScheme.onSurface
@@ -117,8 +121,15 @@ fun Questions (
                     .padding(8.dp)
                     .swipableCard(
                         state = state2,
-                        onSwiped = {
-                            currentStep++
+                        onSwiped = { it ->
+                            currentStep++;
+                            // prinln direction of swipe
+                            println("swiped: $it");
+                            // if swiped to the right, add "True" to the answerList
+                            val question = questions[1]
+                            val answer = Pair(question, it.toString() == "Right")
+                            println("answerList: $answer");
+                            store.dispatch(UpdateAnswers(answer))
                         }
 
                     )
@@ -138,8 +149,8 @@ fun Questions (
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = questions[1],
-                        style = MaterialTheme.typography.titleMedium,
+                        text = questions[1].toString(),
+                        style = MaterialTheme.typography.titleSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().align(Alignment.Center),
                         color = MaterialTheme.colorScheme.onSurface
@@ -153,8 +164,15 @@ fun Questions (
                     .padding(8.dp)
                     .swipableCard(
                         state = state3,
-                        onSwiped = {
-                            currentStep++
+                        onSwiped = { it ->
+                            currentStep++;
+                            // prinln direction of swipe
+                            println("swiped: $it");
+                            // if swiped to the right, add "True" to the answerList
+                            val question = questions[2]
+                            val answer = Pair(question, it.toString() == "Right")
+                            println("answerList: $answer");
+                            store.dispatch(UpdateAnswers(answer))
                         }
 
                     )
@@ -174,8 +192,8 @@ fun Questions (
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = questions[2],
-                        style = MaterialTheme.typography.titleMedium,
+                        text = questions[2].toString(),
+                        style = MaterialTheme.typography.titleSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().align(Alignment.Center),
                         color = MaterialTheme.colorScheme.onSurface
@@ -189,8 +207,15 @@ fun Questions (
                     .padding(8.dp)
                     .swipableCard(
                         state = state4,
-                        onSwiped = {
-                            currentStep++
+                        onSwiped = { it ->
+                            currentStep++;
+                            // prinln direction of swipe
+                            println("swiped: $it");
+                            // if swiped to the right, add "True" to the answerList
+                            val question = questions[3]
+                            val answer = Pair(question, it.toString() == "Right")
+                            println("answerList: $answer");
+                            store.dispatch(UpdateAnswers(answer))
                         }
 
                     )
@@ -210,8 +235,8 @@ fun Questions (
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = questions[3],
-                        style = MaterialTheme.typography.titleMedium,
+                        text = questions[3].toString(),
+                        style = MaterialTheme.typography.titleSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().align(Alignment.Center),
                         color = MaterialTheme.colorScheme.onSurface
@@ -225,8 +250,15 @@ fun Questions (
                     .padding(8.dp)
                     .swipableCard(
                         state = state5,
-                        onSwiped = {
-                            currentStep++
+                        onSwiped = { it ->
+                            currentStep++;
+                            // prinln direction of swipe
+                            println("swiped: $it");
+                            // if swiped to the right, add "True" to the answerList
+                            val question = questions[4]
+                            val answer = Pair(question, it.toString() == "Right")
+                            println("answerList: $answer");
+                            store.dispatch(UpdateAnswers(answer))
                         }
 
                     )
@@ -246,8 +278,8 @@ fun Questions (
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = questions[4],
-                        style = MaterialTheme.typography.titleMedium,
+                        text = questions[4].toString(),
+                        style = MaterialTheme.typography.titleSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().align(Alignment.Center),
                         color = MaterialTheme.colorScheme.onSurface
@@ -257,7 +289,7 @@ fun Questions (
 
         }
         Text(
-            text = "Prsom potiahni doľava ak nesúhlasíš, doprava ak súhlasíš",
+            text = "Prstom potiahni doľava ak nesúhlasíš, doprava ak súhlasíš",
             style = MaterialTheme.typography.titleSmall,
             textAlign = TextAlign.Center,
             color = Color.White,
