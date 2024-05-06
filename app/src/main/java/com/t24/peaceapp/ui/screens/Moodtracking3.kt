@@ -96,11 +96,11 @@ fun post_entry(navigator: DestinationsNavigator): String {
     // Send async POST request to server
     val headers = mapOf(
         "Content-Type" to "application/json",
-        "X-Apikey" to "3a2455ba-9d37-467d-bff0-d5a830526066",
+        "X-Apikey" to "30fa4be8-f8bb-4131-80bb-eda62eb9d116",
         "Authorization" to authorization
 
     )
-    val response =  post("http://10.0.2.2:8000/api/v1/entries",
+    val response =  post("https://tp-be-production.up.railway.app/api/v1/entries",
         headers = headers,
         data = body)
 

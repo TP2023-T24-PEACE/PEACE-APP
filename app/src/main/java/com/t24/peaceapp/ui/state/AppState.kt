@@ -6,10 +6,6 @@ data class AppState(
     val value: Any = "",
     val moods: List<Any> = listOf(),
     val reasons: List<Any> = listOf(),
+    val questions: List<Any> = listOf(),
+    val answers: Any = ""
 )
-
-enum class VisibilityFilter {
-    SHOW_ALL,
-    SHOW_COMPLETED,
-    SHOW_ACTIVE
-}

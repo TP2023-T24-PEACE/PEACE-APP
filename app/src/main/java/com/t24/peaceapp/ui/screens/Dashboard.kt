@@ -1,6 +1,8 @@
 package com.t24.peaceapp.ui.screens
 
 
+import android.content.Context
+import android.os.StrictMode
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
@@ -37,11 +39,62 @@ import com.t24.peaceapp.ui.composables.PriorityOfTheWeek
 import com.t24.peaceapp.ui.screens.destinations.LoginScreenDestination
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
 import com.t24.peaceapp.ui.screens.destinations.QuestionsDestination
+import com.t24.peaceapp.ui.state.UpdateQuestions
 import com.t24.peaceapp.ui.state.UpdateUserId
+import com.t24.peaceapp.ui.state.context
+import khttp.get
+
+fun getQuestions(): List<String> {
+
+    val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+    StrictMode.setThreadPolicy(policy)
+
+    println("Fetching questions")
+
+    val sharedPrefToken = context.getSharedPreferences("token", Context.MODE_PRIVATE)
+    val loggedInUserToken = sharedPrefToken.getString("token", "")
+    val authorization = "Bearer"+ (loggedInUserToken?.replace("\"", ""))
+
+    // Send async POST request to server
+    val headers = mapOf(
+        "Content-Type" to "application/json",
+        "X-Apikey" to "30fa4be8-f8bb-4131-80bb-eda62eb9d116",
+        "Authorization" to authorization
+    )
+
+    println("Headers: $headers")
+
+    val response =  get("https://tp-be-production.up.railway.app/api/v1/tinder-get",
+        headers = headers)
+
+
+    println(response)
+    val items = response.jsonObject.getJSONArray("items")
+
+    val questions = mutableListOf<String>()
+
+    // Extract questions from the JSON array
+    for (i in 0 until items.length()) {
+        val questionObj = items.getJSONObject(i)
+        val question = questionObj.getString("question")
+        questions.add(question.toString())
+    }
+
+    println(questions)
+    if(response.statusCode == 200){
+        response.statusCode.toString()
+        return questions
+    } else {
+        return questions
+    }
+}
 
 @Destination
 @Composable
 fun Dashboard(navigator: DestinationsNavigator){
+    // save questions into state
+    store.dispatch(UpdateQuestions(getQuestions()))
+
     val gradient = Brush.verticalGradient(
         0.0f to Color(0xBF4C5F18),
         1.0f to Color(0xBF2E9E6F),
