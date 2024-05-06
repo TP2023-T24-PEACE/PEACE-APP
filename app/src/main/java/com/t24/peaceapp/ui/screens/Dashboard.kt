@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -41,10 +42,43 @@ import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
 import com.t24.peaceapp.ui.screens.destinations.QuestionsDestination
 import com.t24.peaceapp.ui.state.UpdateQuestions
 import com.t24.peaceapp.ui.state.UpdateUserId
+import com.t24.peaceapp.ui.state.UpdateUserEmail
 import com.t24.peaceapp.ui.state.context
 import khttp.get
 
+fun getUserId(token: String) {
+    val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+    StrictMode.setThreadPolicy(policy)
+
+    println("GETTING USER ID")
+    // remove quotes from token
+    val authorization = "Bearer"+token.replace("\"", "")
+    // Register user
+    val headers = mapOf(
+        "Content-Type" to "application/json",
+        "X-Apikey" to "30fa4be8-f8bb-4131-80bb-eda62eb9d116",
+        "Authorization" to authorization
+    )
+    val response =  get("https://tp-be-production.up.railway.app/api/v1/user-me",
+        headers = headers)
+    println("header before user-me")
+    println(headers)
+    println(response)
+
+    if(response.statusCode == 200){
+        response.statusCode.toString()
+        val userId = response.text.split("\"id\":")[1].split(",")[0]
+        val email = response.text.split("\"email\":")[1].split(",")[0]
+        println("userId: $userId")
+        println("email: $email")
+        store.dispatch(UpdateUserId(userId))
+        store.dispatch(UpdateUserEmail(email))
+        userId
+    }
+}
+
 fun getQuestions(): List<String> {
+
 
     val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
     StrictMode.setThreadPolicy(policy)
@@ -54,6 +88,9 @@ fun getQuestions(): List<String> {
     val sharedPrefToken = context.getSharedPreferences("token", Context.MODE_PRIVATE)
     val loggedInUserToken = sharedPrefToken.getString("token", "")
     val authorization = "Bearer"+ (loggedInUserToken?.replace("\"", ""))
+    if (loggedInUserToken != null) {
+        getUserId(loggedInUserToken)
+    }
 
     // Send async POST request to server
     val headers = mapOf(
@@ -112,6 +149,8 @@ fun Dashboard(navigator: DestinationsNavigator){
             .background(gradient)
     ){
 
+        val email = store.state.email
+
         Column {
 
             InfoPanel()
@@ -125,17 +164,26 @@ fun Dashboard(navigator: DestinationsNavigator){
                 PriorityOfTheWeek()
                 MoodAnalysis()
                 // Logout button
+                Text(text = "Si prihlásený ako: $email",
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .padding(20.dp)
+                        .width(200.dp)
+                        .align(Alignment.CenterHorizontally)
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(Color(0xFFDC3545))
                         .padding(16.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(Color(0xFF314700))
                         .clickable {
                             println("Logging out")
                             store.dispatch(UpdateUserId(""))
+                            store.dispatch(UpdateUserEmail(""))
                             navigator.navigate(LoginScreenDestination)
                         }
                 ) {
@@ -179,7 +227,7 @@ fun InfoPanel(){
             }
 
             Column {
-                Image(painter = painterResource(id = R.drawable.settings), contentDescription = "Settings" )
+
             }
         }    }
 }

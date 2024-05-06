@@ -7,5 +7,6 @@ data class AppState(
     val moods: List<Any> = listOf(),
     val reasons: List<Any> = listOf(),
     val questions: List<Any> = listOf(),
-    val answers: Any = ""
+    val answers: Any = "",
+    val email: Any = ""
 )
