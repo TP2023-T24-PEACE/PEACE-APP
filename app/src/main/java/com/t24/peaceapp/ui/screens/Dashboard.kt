@@ -176,7 +176,6 @@ fun Dashboard(navigator: DestinationsNavigator){
                 DailyTasks(navigator)
                 Last7days(navigator)
                 PriorityOfTheWeek()
-                MoodAnalysis()
                 // Logout button
                 Text(text = "Si prihlásený ako: $email",
                     style = MaterialTheme.typography.labelMedium,
@@ -515,7 +514,7 @@ fun MoodAnalysis(
                     .padding(16.dp) // Adjust the padding as needed
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.sleep),
+                    painter = painterResource(id = R.drawable.sleep_emoji),
                     contentDescription = "Sleep",
 
                 )

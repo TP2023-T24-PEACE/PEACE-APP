@@ -132,20 +132,22 @@ fun MoodSlider(sliderPosition: Float, onValueChanged: (Float) -> Unit) {
     var sliderPosition by remember { mutableFloatStateOf(sliderPosition) }
 
     val moodImages = listOf(
-        R.drawable.green_excited,
-        R.drawable.yellow_happy,
-        R.drawable.lightorange_neutral,
-        R.drawable.orange_sad,
-        R.drawable.red_verysad
+        R.drawable.emoji_100,
+        R.drawable.emoji_84,
+        R.drawable.emoji_67,
+        R.drawable.emoji_50,
+        R.drawable.emoji_34,
+        R.drawable.emoji_17
     )
 
 
     val selectedImageIndex = when (sliderPosition) {
-        in 0.0f..0.2f -> 4
-        in 0.2f..0.4f -> 3
-        in 0.4f..0.6f -> 2
-        in 0.6f..0.8f -> 1
-        in 0.8f..1.0f -> 0
+        in 0.0f..0.17f -> 5
+        in 0.17f..0.34f -> 4
+        in 0.34f..0.50f -> 3
+        in 0.50f..0.67f -> 2
+        in 0.67f..0.84f -> 1
+        in 0.84f..1f -> 0
         else -> 0
     }
 
@@ -201,7 +203,6 @@ fun MoodSlider(sliderPosition: Float, onValueChanged: (Float) -> Unit) {
                             onValueChanged(it)
                         },
                     )
-                    Text(text = sliderPosition.toString(), modifier = Modifier.padding(top = 35.dp))
                 }
             }
         }

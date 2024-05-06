@@ -1,5 +1,6 @@
 package com.t24.peaceapp.ui.composables
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -44,26 +45,52 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.t24.peaceapp.R
+import com.t24.peaceapp.ui.screens.store
+import com.t24.peaceapp.ui.state.UpdateChallenge
+import com.t24.peaceapp.ui.state.UpdatePriority
+import com.t24.peaceapp.ui.state.context
+import khttp.post
 import kotlin.math.max
-
 
 @Composable
 fun PriorityOfTheWeek(
 ){
 
-    var priority by remember { mutableStateOf("") }
+    var priority = store.state.priority
 
     //val challenge = "Nastav si 1-hodinovú pauzu od všetkých digitálnych zariadení."
-    var challenge by remember { mutableStateOf("") }
+    var challenge = store.state.challenge
 
-    fun selectChallenge(){
-        challenge = "Vytvor si digitálnu detoxikáciu počas víkendov alebo vo večerných hodinách."
+    fun selectChallenge(priority : String){
+
+        val sharedPrefToken = context.getSharedPreferences("token", Context.MODE_PRIVATE)
+        val loggedInUserToken = sharedPrefToken.getString("token", "")
+        println("GETTING Challenge")
+        // remove quotes from token
+        val authorization = "Bearer"+ (loggedInUserToken?.replace("\"", ""))
+        val headers = mapOf(
+            "Content-Type" to "application/json",
+            "X-Apikey" to "30fa4be8-f8bb-4131-80bb-eda62eb9d116",
+            "Authorization" to authorization
+        )
+        val body = """{"category_name":"$priority"}""".trimIndent()
+
+        val response =  post("https://tp-be-production.up.railway.app/api/v1/challenge",
+            headers = headers, data = body)
+        println("header before select challenge")
+        if(response.statusCode == 200){
+            response.statusCode.toString()
+            var challenge = response.text.split("\"challenge\":")[1].split(".")[0]
+            /* Storing challenge to state   */                                                                                                                                                 challenge = challenge.replace("\\u010f", "ď").replace("\\u013e", "ľ").replace("\\u0155", "ŕ").replace("\\u0155", "ŕ").replace("\\u00f4", "ô").replace("\\u00fd", "ý").replace("\\u0161", "š").replace("\\u0160", "Š").replace("\\u010d", "č").replace("\\u010c", "Č").replace("\\u0148", "ň").replace("\\u0165", "ť").replace("\\u010f", "ď").replace("\\u013e", "ľ").replace("\\u017d", "Ž").replace("\\u00e1", "á").replace("\\u00e9", "é").replace("\\u00ed", "í").replace("\\u00f3", "ó").replace("\\u00fd", "ý").replace("\\u00c1", "Á").replace("\\u00c9", "É").replace("\\u00cd", "Í").replace("\\u00d3", "Ó").replace("\\u00da", "Ú").replace("\\u00dd", "Ý").replace("\\u00e4", "ä").replace("{","").replace("}", "").replace("\"", "").replace("]","").replace("[","").replace("\\u00fa", "ú").replace("\\u00fc", "ü").replace("\\u00e1", "á").replace("\\u00e9", "é").replace("\\u00ed", "í").replace("\\u00f3", "ó").replace("\\u00fd", "ý").replace("\\u00c1", "Á").replace("\\u00c9", "É").replace("\\u00cd", "Í").replace("\\u00d3", "Ó").replace("\\u00da", "Ú").replace("\\u00dd", "Ý").replace("\\u00e4", "ä").replace("\\u00fa", "ú").replace("\\u00fc", "ü").replace("\\u00e1", "á").replace("\\u00e9", "é").replace("\\u00ed", "í").replace("\\u00f3", "ó").replace("\\u00fd", "ý").replace("\\u00c1", "Á").replace("\\u00c9", "É").replace("\\u00cd", "Í").replace("\\u00d3", "Ó").replace("\\u00da", "Ú").replace("\\u00dd", "Ý").replace("\\u00e4", "ä").replace("\\u00fa", "ú").replace("\\u00fc", "ü").replace("\\u00e1", "á").replace("\\u00e9", "é").replace("\\u00ed", "í").replace("\\u00f3", "ó").replace("\\u00fd", "ý").replace("\\u00c1", "Á").replace("\\u00c9", "É").replace("\\u00cd", "Í").replace("\\u00d3", "Ó").replace("\\u00da", "Ú").replace("\\u00dd", "Ý").replace("\\u00e4", "ä").replace("\\u00fa", "ú").replace("\\u00fc", "ü").replace("\\u00e1", "á").replace("\\u00e9", "é").replace("\\u00ed", "í").replace("\\u00f3", "ó").replace("\\u00fd", "ý").replace("\\u00c1", "Á").replace("\\u00c9", "É").replace("\\u00cd", "Í").replace("\\u00d3", "Ó").replace("\\u00da", "Ú").replace("\\u00dd", "Ý").replace("\\u00e4", "ä").replace("\\u00fa", "ú").replace("\\u00fc", "ü").replace("\\u00e1", "á").replace("\\u00e9", "é").replace("\\u00ed", "í").replace("\\u00f3", "ó").replace("\\u00fd", "ý").replace("\\u00c1", "Á").replace("\\u00c9", "É").replace("\\u00cd", "Í").replace("\\u00d3", "Ó").replace("\\u00da", "Ú").replace("\\u00dd", "Ý").replace("\\u00e4", "ä").replace("\\u00fa", "ú").replace("\\u00fc", "ü").replace("\\u00e1", "á").replace("\\u00e9", "é").replace("\\u00ed", "í").replace("\\u00f3", "ó").replace("\\u00fd", "ý").replace("\\u00c1", "Á").replace("\\u00c9", "É").replace("\\u00cd", "Í").replace("\\u00d3", "Ó").replace("\\u00da", "Ú").replace("\\u00dd", "Ý").replace("\\u00e4", "ä").replace("\\u00fa", "ú").replace("\\u00fc", "ü").replace("\\u00e1", "á").replace("\\u00e9", "é").replace("\\u00ed", "í").replace("\\u00f3", "ó").replace("\\u00fd", "ý").replace("\\u00c1", "Á").replace("\\u00c9", "É").replace("\\u00cd", "Í").replace("\\u00d3", "Ó").replace("\\u00da", "Ú").replace("\\u00dd", "Ý").replace("\\u00e4", "ä").replace("\\u00fa", "ú").replace("\\u00fc", "ü").replace("\\u00e1", "á").replace("\\u00e9", "é").replace("\\u00ed", "í").replace("\\u017e","ž")
+            println("Challenge: $challenge")
+            store.dispatch(UpdateChallenge(challenge))
+        }
     }
 
     // This is the callback that the child will call
     val handleChildDataPriority: (String) -> Unit = { data ->
-        priority = data
-        selectChallenge()
+        store.dispatch(UpdatePriority(data))
+        selectChallenge(data)
     }
 
 
@@ -122,11 +149,37 @@ fun PriorityOfTheWeek(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     if (challenge != "") {
-                        Image(
-                            painter = painterResource(id = R.drawable.sleep),
-                            modifier = Modifier.size(60.dp),
-                            contentDescription = "Sleep"
-                        )
+                        if(priority == "Emočný stav"){
+                            Image(
+                                painter = painterResource(id = R.drawable.priority_emotions),
+                                modifier = Modifier.size(120.dp),
+                                contentDescription = "Emotions"
+                            )
+                        } else if (priority == "Produktivita a práca/škola"){
+                            Image(
+                                painter = painterResource(id = R.drawable.priority_work),
+                                modifier = Modifier.size(80.dp),
+                                contentDescription = "Work"
+                            )
+                        } else if (priority == "Osobné vzťahy"){
+                            Image(
+                                painter = painterResource(id = R.drawable.priority_relationship),
+                                modifier = Modifier.size(100.dp),
+                                contentDescription = "Relationships"
+                            )
+                        } else if (priority == "Zdravie a pohoda"){
+                            Image(
+                                painter = painterResource(id = R.drawable.sleep_emoji),
+                                modifier = Modifier.size(60.dp),
+                                contentDescription = "Health"
+                            )
+                        } else if (priority == "Digitálne prostredie a média"){
+                            Image(
+                                painter = painterResource(id = R.drawable.priority_emotions),
+                                modifier = Modifier.size(60.dp),
+                                contentDescription = "Media"
+                            )
+                        }
                         Text(
                             text = (if(priority != "") priority else ""),
                             color = Color.White,

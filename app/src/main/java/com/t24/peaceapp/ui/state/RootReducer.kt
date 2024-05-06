@@ -11,5 +11,7 @@ fun rootReducer(state: AppState, action: Any) = AppState(
     moods = moodsReducer(state.moods, action),
     reasons = reasonsReducer(state.reasons, action),
     questions = questionsReducer(state.questions, action),
-    answers = answersReducer(state.answers, action)
+    answers = answersReducer(state.answers, action),
+    challenge = userChallengeReducer(state.challenge, action),
+    priority = userPriorityReducer(state.priority, action)
 )

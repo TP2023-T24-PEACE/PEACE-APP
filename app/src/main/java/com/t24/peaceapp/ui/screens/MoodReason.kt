@@ -36,7 +36,7 @@ fun MoodReason(
 
     Box(
         modifier = Modifier
-            .padding(6.dp)
+            .padding(4.dp)
             .fillMaxSize()
             .clip(RoundedCornerShape(20.dp))
             .background(
@@ -44,7 +44,7 @@ fun MoodReason(
             )
             .padding(15.dp)
             .clickable {
-                isSelected = !isSelected;
+                isSelected = !isSelected
                 onValueChanged(isSelected)
             }
             .aspectRatio(1f)
@@ -54,15 +54,18 @@ fun MoodReason(
             contentDescription = mood.title,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .size(56.dp)
+                .size(50.dp)
                 .padding(bottom = 4.dp)
         )
         Text(
             text = mood.title,
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier.align(
+                Alignment.BottomCenter),
             style = MaterialTheme.typography.bodyLarge,
             fontSize = 14.sp,
-            fontWeight = FontWeight.Bold
+            lineHeight = 16.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center
         )
     }
 }
