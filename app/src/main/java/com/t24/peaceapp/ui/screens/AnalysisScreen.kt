@@ -194,26 +194,29 @@ fun AnalysisScreen(navigator: DestinationsNavigator) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 60.dp) // Padding at the bottom to avoid overlap with the button
+                .padding(bottom = 80.dp) // Padding at the bottom to avoid overlap with the button
         ) {
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
                     .fillMaxSize()
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        "Graf nálad",
-                        color = Color.White,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
 
-                Graph(grapgData)
+                if (entriesData.length() > 1) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            "Graf nálad",
+                            color = Color.White,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    Graph(grapgData)
+                }
                 EntriesStats(totalEntries as Int, averageMoodLastWeek as Float, averageMoodPrevMonth as Float, trendChange as Float, trendMessage as String)
                 MoodBestWorst(moodBest, moodBestCount, moodWorst, moodWorstCount)
                 QuestionsStats(tinderTotalEntries.toInt(), beneficial.toInt(), harmful, beneficialPercentage.toFloat(), tinderTrendChange.toFloat(), tinderTrendMessage)
@@ -231,7 +234,7 @@ fun AnalysisScreen(navigator: DestinationsNavigator) {
                 .clip(RoundedCornerShape(50.dp))
                 .background(Color(0xFF5CDB5C))
                 .fillMaxWidth(),
-            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
             elevation = ButtonDefaults.buttonElevation(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF5CDB5C),

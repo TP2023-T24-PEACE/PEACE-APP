@@ -30,7 +30,6 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.Mood
 import com.t24.peaceapp.R
-import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking3Destination
 
@@ -57,114 +56,98 @@ fun Moodtracking2(
             MoodReasonSelector(moods =
             listOf(
                 Mood(
-                    title = "Štastný",
-                    iconId = R.drawable.smiling_face,
+                    title = "Štastie",
+                    iconId = R.drawable.happiness,
                     moodValue = 2,
                     selected = false
                 ),
                 Mood(
-                    title = "Vyčerpaný",
-                    iconId = R.drawable.exhausted_face,
+                    title = "Smútok",
+                    iconId = R.drawable.sadness,
+                    moodValue = 1,
+                    selected = false
+                ),
+                Mood(
+                    title = "Znudenenie",
+                    iconId = R.drawable.boredom,
                     moodValue = 3,
                     selected = false
                 ),
                 Mood(
-                    title = "Smutný",
-                    iconId = R.drawable.crying_face,
+                    title = "Vzrušenie",
+                    iconId = R.drawable.excitement,
                     moodValue = 4,
                     selected = false
                 ),
                 Mood(
-                    title = "Vyčerpaný",
-                    iconId = R.drawable.exhausted_face,
-                    moodValue = 3,
+                    title = "Hnev",
+                    iconId = R.drawable.anger,
+                    moodValue = 5,
                     selected = false
                 ),
                 Mood(
-                    title = "Štastný",
-                    iconId = R.drawable.smiling_face,
-                    moodValue = 2,
+                    title = "Dôvera",
+                    iconId = R.drawable.trust_emoji,
+                    moodValue = 6,
                     selected = false
                 ),
                 Mood(
-                    title = "Smutný",
-                    iconId = R.drawable.crying_face,
+                    title = "Úzkosť",
+                    iconId = R.drawable.anxiety,
                     moodValue = 4,
                     selected = false
                 ),
                 Mood(
-                    title = "Vyčerpaný",
-                    iconId = R.drawable.exhausted_face,
-                    moodValue = 3,
+                    title = "Láska",
+                    iconId = R.drawable.love,
+                    moodValue = 5,
                     selected = false
                 ),
                 Mood(
-                    title = "Smutný",
-                    iconId = R.drawable.crying_face,
+                    title = "Nenávisť",
+                    iconId = R.drawable.hate,
+                    moodValue = 6,
+                    selected = false
+                ),
+                Mood(
+                    title = "Stres",
+                    iconId = R.drawable.stress,
                     moodValue = 4,
                     selected = false
                 ),
                 Mood(
-                    title = "Štastný",
-                    iconId = R.drawable.smiling_face,
-                    moodValue = 2,
+                    title = "Záujem",
+                    iconId = R.drawable.interest,
+                    moodValue = 5,
                     selected = false
                 ),
                 Mood(
-                    title = "Smutný",
-                    iconId = R.drawable.crying_face,
+                    title = "Podozrenie",
+                    iconId = R.drawable.suspicion,
+                    moodValue = 6,
+                    selected = false
+                ),
+                Mood(
+                    title = "Uvoľnenie",
+                    iconId = R.drawable.relaxed,
                     moodValue = 4,
                     selected = false
                 ),
                 Mood(
-                    title = "Štastný",
-                    iconId = R.drawable.smiling_face,
-                    moodValue = 2,
+                    title = "Napätie",
+                    iconId = R.drawable.tension,
+                    moodValue = 5,
                     selected = false
                 ),
                 Mood(
-                    title = "Vyčerpaný",
-                    iconId = R.drawable.exhausted_face,
-                    moodValue = 3,
+                    title = "Úľava",
+                    iconId = R.drawable.relief,
+                    moodValue = 6,
                     selected = false
                 ),
 
-                Mood(
-                    title = "Štastný",
-                    iconId = R.drawable.smiling_face,
-                    moodValue = 2,
-                    selected = false
-                ),
-                Mood(
-                    title = "Vyčerpaný",
-                    iconId = R.drawable.exhausted_face,
-                    moodValue = 3,
-                    selected = false
-                ),
-                Mood(
-                    title = "Smutný",
-                    iconId = R.drawable.crying_face,
-                    moodValue = 4,
-                    selected = false
-                ),
-                Mood(
-                    title = "Štastný",
-                    iconId = R.drawable.smiling_face,
-                    moodValue = 2,
-                    selected = false
-                ),
-                Mood(
-                    title = "Vyčerpaný",
-                    iconId = R.drawable.exhausted_face,
-                    moodValue = 3,
-                    selected = false
-                ),
-                Mood(
-                    title = "Smutný",
-                    iconId = R.drawable.crying_face,
-                    moodValue = 4,
-                    selected = false
-                )
+
+
             ),"Pomôž nám lepšie pochopiť tvoju náladu","moods"
             )
         }
