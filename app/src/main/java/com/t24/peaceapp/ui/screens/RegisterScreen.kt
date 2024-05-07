@@ -192,6 +192,7 @@ fun RegisterScreen(
                         color = Color.Black
                     ) },
                 singleLine = true,
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             )
             Button(
