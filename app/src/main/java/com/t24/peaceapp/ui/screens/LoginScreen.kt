@@ -50,37 +50,7 @@ import com.t24.peaceapp.ui.state.UpdateUserToken
 import khttp.get as khttp_get
 import khttp.post as khttp_post
 
-fun getUserId(token: String): String {
-    val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-    StrictMode.setThreadPolicy(policy)
 
-    println("GETTING USER ID")
-    // remove quotes from token
-    val authorization = "Bearer"+token.replace("\"", "")
-    // Register user
-    val headers = mapOf(
-        "Content-Type" to "application/json",
-        "X-Apikey" to "30fa4be8-f8bb-4131-80bb-eda62eb9d116",
-        "Authorization" to authorization
-    )
-    val response =  khttp_get("https://tp-be-production.up.railway.app/api/v1/user-me",
-        headers = headers)
-    println("header before user-me")
-    println(headers)
-    println(response)
-
-    return if(response.statusCode == 200){
-        response.statusCode.toString()
-        val userId = response.text.split("\"id\":")[1].split(",")[0]
-        println("userId: $userId")
-        // Update userId in state
-        store.dispatch(UpdateUserId(userId))
-        userId
-    } else {
-        // If successful, navigate to Dashboard
-        "Nesprávne prihlasovacie údaje!"
-    }
-}
 
 fun login(username : String, password : String, navigator: DestinationsNavigator): String {
 
@@ -122,8 +92,6 @@ fun login(username : String, password : String, navigator: DestinationsNavigator
         store.dispatch(UpdateUserToken(token))
         navigator.navigate(DashboardDestination)
         "Prihlásenie prebehlo úspešne!"
-
-        getUserId(token)
 
     } else {
         // If successful, navigate to Dashboard

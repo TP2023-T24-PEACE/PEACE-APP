@@ -35,9 +35,7 @@ import com.ramcosta.composedestinations.spec.Direction
 import com.t24.peaceapp.Mood
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.screens.destinations.DashboardDestination
-import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking2Destination
-import com.t24.peaceapp.ui.state.UpdateUserToken
 import com.t24.peaceapp.ui.state.context
 import khttp.post
 
@@ -156,95 +154,78 @@ fun Moodtracking3(
                     selected = false
                 ),
                 Mood(
-                    title = "Práca",
-                    iconId = R.drawable.work,
-                    moodValue = 4,
+                    title = "Vzdelanie",
+                    iconId = R.drawable.graduation_cap,
+                    moodValue = 5,
                     selected = false
                 ),
                 Mood(
-                    title = "Rodina",
-                    iconId = R.drawable.family,
-                    moodValue = 3,
+                    title = "Priatelia",
+                    iconId = R.drawable.friends,
+                    moodValue = 6,
                     selected = false
                 ),
                 Mood(
-                    title = "Financie",
-                    iconId = R.drawable.finance,
-                    moodValue = 2,
+                    title = "Partner",
+                    iconId = R.drawable.heart,
+                    moodValue = 7,
                     selected = false
                 ),
                 Mood(
-                    title = "Rodina",
-                    iconId = R.drawable.family,
-                    moodValue = 3,
+                    title = "Zdravie",
+                    iconId = R.drawable.health,
+                    moodValue = 8,
                     selected = false
                 ),
                 Mood(
-                    title = "Financie",
-                    iconId = R.drawable.finance,
-                    moodValue = 2,
+                    title = "Počasie",
+                    iconId = R.drawable.weather,
+                    moodValue = 9,
                     selected = false
                 ),
                 Mood(
-                    title = "Práca",
-                    iconId = R.drawable.work,
-                    moodValue = 4,
+                    title = "Jedlo",
+                    iconId = R.drawable.food,
+                    moodValue = 11,
                     selected = false
                 ),
                 Mood(
-                    title = "Financie",
-                    iconId = R.drawable.finance,
-                    moodValue = 2,
+                    title = "Spánok",
+                    iconId = R.drawable.sleep_emoji,
+                    moodValue = 12,
                     selected = false
                 ),
                 Mood(
-                    title = "Práca",
-                    iconId = R.drawable.work,
-                    moodValue = 4,
+                    title = "Hudba",
+                    iconId = R.drawable.music,
+                    moodValue = 13,
                     selected = false
                 ),
                 Mood(
-                    title = "Rodina",
-                    iconId = R.drawable.family,
-                    moodValue = 3,
+                    title = "Záľuby",
+                    iconId = R.drawable.hobby,
+                    moodValue = 14,
                     selected = false
                 ),
                 Mood(
-                    title = "Financie",
-                    iconId = R.drawable.finance,
-                    moodValue = 2,
+                    title = "Cvičenie",
+                    iconId = R.drawable.sport,
+                    moodValue = 15,
                     selected = false
                 ),
                 Mood(
-                    title = "Rodina",
-                    iconId = R.drawable.family,
-                    moodValue = 3,
+                    title = "Domáce práce",
+                    iconId = R.drawable.home,
+                    moodValue = 16,
                     selected = false
                 ),
                 Mood(
-                    title = "Práca",
-                    iconId = R.drawable.work,
-                    moodValue = 4,
+                    title = "Cestovanie",
+                    iconId = R.drawable.travel,
+                    moodValue = 17,
                     selected = false
-                ),
-                Mood(
-                    title = "Financie",
-                    iconId = R.drawable.finance,
-                    moodValue = 2,
-                    selected = false
-                ),
-                Mood(
-                    title = "Rodina",
-                    iconId = R.drawable.family,
-                    moodValue = 3,
-                    selected = false
-                ),
-                Mood(
-                    title = "Práca",
-                    iconId = R.drawable.work,
-                    moodValue = 4,
-                    selected = false
-                ),
+                )
+
             ),"Prečo sa takto cítiš?","reasons"
             )
         }
