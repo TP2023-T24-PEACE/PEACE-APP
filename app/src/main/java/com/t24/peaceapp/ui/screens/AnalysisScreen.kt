@@ -217,6 +217,18 @@ fun AnalysisScreen(navigator: DestinationsNavigator) {
 
                     Graph(grapgData)
                 }
+                else{
+                    Text(
+                        "Vyplň záznam nálady aspoň počas 2 dní, aby sa ti zobrazil graf nálady v priebehu času",
+                        color = Color.White,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 24.dp, bottom = 24.dp)
+                    )
+                }
                 EntriesStats(totalEntries as Int, averageMoodLastWeek as Float, averageMoodPrevMonth as Float, trendChange as Float, trendMessage as String)
                 MoodBestWorst(moodBest, moodBestCount, moodWorst, moodWorstCount)
                 QuestionsStats(tinderTotalEntries.toInt(), beneficial.toInt(), harmful, beneficialPercentage.toFloat(), tinderTrendChange.toFloat(), tinderTrendMessage)
