@@ -51,6 +51,7 @@ import khttp.get as khttp_get
 import khttp.post as khttp_post
 
 
+
 fun login(username : String, password : String, navigator: DestinationsNavigator): String {
 
     val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -74,7 +75,7 @@ fun login(username : String, password : String, navigator: DestinationsNavigator
     // Send async POST request to server
     val headers = mapOf(
         "Content-Type" to "application/json",
-        "X-Apikey" to "30fa4be8-f8bb-4131-80bb-eda62eb9d116"
+        "X-Apikey" to "30fa4be8-f8bb-4131-80bb-eda62eb9d116",
     )
     val response =  khttp_post("https://tp-be-production.up.railway.app/api/v1/auth",
         headers = headers,

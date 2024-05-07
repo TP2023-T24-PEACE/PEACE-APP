@@ -43,6 +43,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.t24.peaceapp.R
 import com.t24.peaceapp.ui.composables.PriorityOfTheWeek
+import com.t24.peaceapp.ui.screens.destinations.AnalysisScreenDestination
 import com.t24.peaceapp.ui.screens.destinations.LoginScreenDestination
 import com.t24.peaceapp.ui.screens.destinations.Moodtracking1Destination
 import com.t24.peaceapp.ui.screens.destinations.QuestionsDestination
@@ -443,9 +444,9 @@ fun Last7days(
             .fillMaxWidth()
             .aspectRatio(2f)
             .clickable {
-                println("Navigating to AnalysisScreenDestination")
-                println(store.getState().userId)
-//                navigator.navigate(AnalysisScreenDestination)
+//                println("Navigating to AnalysisScreenDestination")
+//                println(store.getState().userId)
+                navigator.navigate(AnalysisScreenDestination)
             }
     )
     {
